@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07152f">
 <title>VIZHI STATUS</title>
 
 <style>
@@ -13,125 +14,211 @@
 }
 
 body{
-  font-family:Arial,sans-serif;
-  background:linear-gradient(135deg,#07152f,#102d5c,#07152f);
+  font-family:Arial,"Noto Sans Tamil",sans-serif;
+  background:linear-gradient(135deg,#07152f,#123b78,#07152f);
   color:white;
   min-height:100vh;
-  padding:20px;
+  padding:15px;
 }
 
 .app{
-  max-width:500px;
+  max-width:650px;
   margin:auto;
 }
 
-.header{
+header{
   text-align:center;
-  padding:20px 10px;
+  padding:18px 5px 25px;
 }
 
 .logo{
-  font-size:42px;
+  font-size:48px;
 }
 
 h1{
-  font-size:30px;
-  margin-top:8px;
+  font-size:32px;
+  margin:5px 0;
 }
 
 .subtitle{
-  color:#b9c8e8;
-  margin-top:6px;
+  color:#cbd7ef;
+  font-size:17px;
 }
 
 .card{
-  background:rgba(255,255,255,.09);
-  border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.22);
   border-radius:22px;
   padding:20px;
-  margin-top:18px;
+  margin-bottom:18px;
   backdrop-filter:blur(10px);
 }
 
 label{
   display:block;
-  margin-bottom:8px;
   font-weight:bold;
+  font-size:18px;
+  margin-bottom:10px;
+}
+
+textarea,
+select,
+input[type="file"]{
+  width:100%;
+  border:0;
+  border-radius:16px;
+  padding:15px;
+  font-size:17px;
+  background:white;
+  color:#111;
+  margin-bottom:15px;
 }
 
 textarea{
-  width:100%;
-  min-height:110px;
-  border:0;
-  outline:none;
-  border-radius:15px;
-  padding:15px;
-  font-size:17px;
-  resize:none;
-  background:#fff;
-  color:#111;
-}
-
-select{
-  width:100%;
-  padding:14px;
-  border-radius:12px;
-  border:0;
-  margin-top:8px;
-  font-size:16px;
+  min-height:130px;
+  resize:vertical;
 }
 
 button{
   width:100%;
   border:0;
-  border-radius:14px;
+  border-radius:16px;
   padding:15px;
-  margin-top:12px;
-  font-size:17px;
+  font-size:18px;
   font-weight:bold;
+  margin-top:10px;
   cursor:pointer;
 }
 
-.generate{
-  background:#20c997;
+.btn-main{
+  background:#20d6a1;
   color:white;
 }
 
-.download{
+.btn-blue{
   background:#4169e1;
   color:white;
 }
 
-.share{
-  background:#25d366;
+.btn-green{
+  background:#20d65d;
   color:white;
 }
 
-.status{
-  margin-top:20px;
-  min-height:300px;
-  border-radius:20px;
-  padding:30px 20px;
+.btn-purple{
+  background:#8b5cf6;
+  color:white;
+}
+
+.btn-dark{
+  background:#18243b;
+  color:white;
+  border:1px solid #52627c;
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+.status-preview{
+  min-height:330px;
+  border-radius:25px;
   display:flex;
   align-items:center;
   justify-content:center;
   text-align:center;
-  background:linear-gradient(135deg,#0d47a1,#1976d2);
-  box-shadow:0 10px 30px rgba(0,0,0,.35);
-}
-
-.status-text{
-  font-size:27px;
+  padding:35px 25px;
+  margin-top:18px;
+  font-size:32px;
   font-weight:bold;
-  line-height:1.4;
+  line-height:1.35;
+  white-space:pre-wrap;
   word-break:break-word;
+  box-shadow:0 15px 40px rgba(0,0,0,.30);
 }
 
-.footer{
+.preview-blue{
+  background:linear-gradient(135deg,#1261d6,#168be8);
+}
+
+.preview-sunset{
+  background:linear-gradient(135deg,#ff512f,#f09819);
+}
+
+.preview-green{
+  background:linear-gradient(135deg,#087f23,#20d65d);
+}
+
+.preview-purple{
+  background:linear-gradient(135deg,#512da8,#9c27b0);
+}
+
+.preview-dark{
+  background:linear-gradient(135deg,#111827,#374151);
+}
+
+.preview-pink{
+  background:linear-gradient(135deg,#ec4899,#f97316);
+}
+
+.small-title{
+  font-size:22px;
+  font-weight:bold;
+  margin-bottom:15px;
+}
+
+.suggestions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.suggestion{
+  background:rgba(255,255,255,.12);
+  padding:13px;
+  border-radius:14px;
+  cursor:pointer;
   text-align:center;
-  color:#9fb0d0;
-  padding:25px 0;
-  font-size:13px;
+}
+
+.media-box{
+  background:#020617;
+  border-radius:18px;
+  padding:12px;
+  margin-top:12px;
+}
+
+video,
+audio{
+  width:100%;
+  border-radius:14px;
+  margin-top:8px;
+}
+
+video{
+  max-height:420px;
+  background:#000;
+}
+
+.info{
+  color:#cbd5e1;
+  font-size:14px;
+  line-height:1.6;
+  margin-top:10px;
+}
+
+footer{
+  text-align:center;
+  color:#aebbd1;
+  padding:20px;
+}
+
+.hidden{
+  display:none;
+}
+
+#canvas{
+  display:none;
 }
 </style>
 </head>
@@ -140,140 +227,759 @@ button{
 
 <div class="app">
 
-  <div class="header">
-    <div class="logo">👁️✨</div>
-    <h1>VIZHI STATUS</h1>
-    <div class="subtitle">உங்கள் தினசரி Status உருவாக்குங்கள்</div>
+<header>
+  <div class="logo">👁️✨</div>
+  <h1>VIZHI STATUS</h1>
+  <div class="subtitle">
+    உங்கள் தினசரி Status உருவாக்குங்கள்
   </div>
+</header>
 
-  <div class="card">
+<!-- STATUS CREATOR -->
+<div class="card">
 
-    <label>உங்கள் Status</label>
+<div class="small-title">📝 உங்கள் Status</div>
 
-    <textarea id="message"
-      placeholder="உங்கள் message-ஐ இங்கே எழுதுங்கள்...">இன்று ஒரு புதிய நாள் ❤️
+<textarea id="statusText"
+placeholder="உங்கள் status-ஐ இங்கே எழுதுங்கள்...">இன்று ஒரு புதிய நாள் ❤️
 புதிய நம்பிக்கையுடன் தொடங்குவோம்!</textarea>
 
-    <label style="margin-top:18px;">Background</label>
+<label>🎨 Background</label>
 
-    <select id="theme">
-      <option value="blue">💙 Blue</option>
-      <option value="green">💚 Green</option>
-      <option value="purple">💜 Purple</option>
-      <option value="sunset">🌅 Sunset</option>
-      <option value="dark">🖤 Dark</option>
-    </select>
+<select id="backgroundSelect">
+<option value="blue">💙 Blue</option>
+<option value="sunset">🌅 Sunset</option>
+<option value="green">💚 Green</option>
+<option value="purple">💜 Purple</option>
+<option value="dark">🖤 Dark</option>
+<option value="pink">💗 Pink</option>
+</select>
 
-    <button class="generate" onclick="generateStatus()">
-      ✨ STATUS உருவாக்கு
-    </button>
+<label>🖼️ Custom Background Image</label>
+<input type="file" id="bgImage" accept="image/*">
 
-    <button class="download" onclick="downloadStatus()">
-      📥 Download
-    </button>
+<button class="btn-main" onclick="createStatus()">
+✨ STATUS உருவாக்கு
+</button>
 
-    <button class="share" onclick="shareStatus()">
-      📤 Share
-    </button>
+<button class="btn-purple" onclick="smartStatus()">
+🤖 Smart Status
+</button>
 
-  </div>
+<button class="btn-blue" onclick="downloadStatus()">
+📥 Download Status
+</button>
 
-  <div id="status" class="status">
-    <div id="statusText" class="status-text">
-      இன்று ஒரு புதிய நாள் ❤️<br>
-      புதிய நம்பிக்கையுடன் தொடங்குவோம்!
-    </div>
-  </div>
+<button class="btn-green" onclick="shareStatus()">
+📤 Share Status
+</button>
 
-  <div class="footer">
-    © 2026 VIZHI STATUS
-  </div>
+<div id="statusPreview" class="status-preview preview-blue">
+இன்று ஒரு புதிய நாள் ❤️
+புதிய நம்பிக்கையுடன் தொடங்குவோம்!
+</div>
 
 </div>
 
+
+<!-- SMART STATUS -->
+<div class="card">
+
+<div class="small-title">🤖 Smart Status Ideas</div>
+
+<div class="suggestions">
+
+<div class="suggestion" onclick="useSuggestion(0)">
+🌅 காலை
+</div>
+
+<div class="suggestion" onclick="useSuggestion(1)">
+🌙 இரவு
+</div>
+
+<div class="suggestion" onclick="useSuggestion(2)">
+❤️ காதல்
+</div>
+
+<div class="suggestion" onclick="useSuggestion(3)">
+🔥 Motivation
+</div>
+
+<div class="suggestion" onclick="useSuggestion(4)">
+😊 நட்பு
+</div>
+
+<div class="suggestion" onclick="useSuggestion(5)">
+🙏 நல்ல நாள்
+</div>
+
+</div>
+
+<p class="info">
+இது API இல்லாமல் இயங்கும் Smart Status generator.
+உண்மையான AI உருவாக்க API/backend தேவை.
+</p>
+
+</div>
+
+
+<!-- VIDEO STATUS -->
+<div class="card">
+
+<div class="small-title">🎬 Video Status</div>
+
+<label>Video தேர்வு செய்யுங்கள்</label>
+
+<input type="file"
+id="videoInput"
+accept="video/*">
+
+<div id="videoBox" class="media-box hidden">
+
+<video id="videoPreview" controls></video>
+
+<button class="btn-blue" onclick="downloadVideo()">
+📥 Video Download
+</button>
+
+<button class="btn-green" onclick="shareVideo()">
+📤 Video Share
+</button>
+
+</div>
+
+</div>
+
+
+<!-- AUDIO STATUS -->
+<div class="card">
+
+<div class="small-title">🎵 Audio Status</div>
+
+<label>Audio தேர்வு செய்யுங்கள்</label>
+
+<input type="file"
+id="audioInput"
+accept="audio/*">
+
+<div id="audioBox" class="media-box hidden">
+
+<audio id="audioPreview" controls></audio>
+
+<button class="btn-blue" onclick="downloadAudio()">
+📥 Audio Download
+</button>
+
+</div>
+
+</div>
+
+
+<!-- REELS -->
+<div class="card">
+
+<div class="small-title">🎞️ Reels</div>
+
+<label>Reels Video Upload</label>
+
+<input type="file"
+id="reelsInput"
+accept="video/*">
+
+<div id="reelsBox" class="media-box hidden">
+
+<video id="reelsPreview"
+controls
+playsinline></video>
+
+<button class="btn-purple" onclick="downloadReels()">
+📥 Reels Download
+</button>
+
+<button class="btn-green" onclick="shareReels()">
+📤 Reels Share
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ABOUT -->
+<div class="card">
+
+<div class="small-title">ℹ️ VIZHI STATUS</div>
+
+<p class="info">
+VIZHI STATUS மூலம் தினசரி text status,
+background status, video status, audio மற்றும்
+reels media-ஐ mobile-லேயே பயன்படுத்தலாம்.
+</p>
+
+</div>
+
+<footer>
+© 2026 VIZHI STATUS
+</footer>
+
+</div>
+
+
+<canvas id="canvas" width="1080" height="1080"></canvas>
+
+
 <script>
 
-function generateStatus(){
+let bgImageData = null;
+let currentVideoURL = null;
+let currentAudioURL = null;
+let currentReelsURL = null;
 
-  const message =
-    document.getElementById("message").value;
 
-  const theme =
-    document.getElementById("theme").value;
+/* ---------------- STATUS ---------------- */
 
-  document.getElementById("statusText")
-    .innerText = message;
-
-  const status =
-    document.getElementById("status");
-
-  if(theme === "blue"){
-    status.style.background =
-      "linear-gradient(135deg,#0d47a1,#1976d2)";
-  }
-
-  if(theme === "green"){
-    status.style.background =
-      "linear-gradient(135deg,#087f23,#20c997)";
-  }
-
-  if(theme === "purple"){
-    status.style.background =
-      "linear-gradient(135deg,#512da8,#9c27b0)";
-  }
-
-  if(theme === "sunset"){
-    status.style.background =
-      "linear-gradient(135deg,#ff512f,#dd2476)";
-  }
-
-  if(theme === "dark"){
-    status.style.background =
-      "linear-gradient(135deg,#111,#333)";
-  }
-}
-
-async function shareStatus(){
+function createStatus(){
 
   const text =
-    document.getElementById("message").value;
+    document.getElementById("statusText").value.trim();
 
-  if(navigator.share){
+  if(!text){
+    alert("முதலில் Status எழுதுங்கள்.");
+    return;
+  }
 
-    try{
-      await navigator.share({
-        title:"VIZHI STATUS",
-        text:text
-      });
-    }catch(e){}
-    
+  const preview =
+    document.getElementById("statusPreview");
+
+  preview.textContent = text;
+
+  preview.className =
+    "status-preview preview-" +
+    document.getElementById("backgroundSelect").value;
+
+  if(bgImageData){
+    preview.style.backgroundImage =
+      "linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.25)),url('" +
+      bgImageData +
+      "')";
+
+    preview.style.backgroundSize = "cover";
+    preview.style.backgroundPosition = "center";
   }else{
-    alert("இந்த phone-ல் Share option கிடைக்கவில்லை.");
+    preview.style.backgroundImage = "";
   }
 }
+
+
+/* ---------------- BACKGROUND IMAGE ---------------- */
+
+document.getElementById("bgImage")
+.addEventListener("change",function(e){
+
+  const file = e.target.files[0];
+
+  if(!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function(event){
+
+    bgImageData = event.target.result;
+
+    createStatus();
+
+  };
+
+  reader.readAsDataURL(file);
+
+});
+
+
+/* ---------------- SMART STATUS ---------------- */
+
+const smartTexts = [
+
+"🌅 காலை வணக்கம் ❤️\nஇன்றைய நாள் இனிய நாளாக அமையட்டும்!",
+
+"🌙 இனிய இரவு ❤️\nநிம்மதியான தூக்கம் கிடைக்கட்டும்!",
+
+"❤️ உண்மையான அன்பு இருந்தால்\nதூரமும் ஒரு பிரச்சனை இல்லை!",
+
+"🔥 இன்று கஷ்டப்பட்டால்\nநாளை வெற்றி நிச்சயம்!",
+
+"😊 நல்ல நண்பர்கள் வாழ்க்கையின்\nமிகப்பெரிய பரிசு!",
+
+"🙏 இன்று நடந்ததற்கும்\nநாளை நடக்கப்போகிறதற்கும் நன்றி!"
+
+];
+
+
+function smartStatus(){
+
+  const random =
+    Math.floor(Math.random()*smartTexts.length);
+
+  document.getElementById("statusText").value =
+    smartTexts[random];
+
+  createStatus();
+}
+
+
+function useSuggestion(index){
+
+  document.getElementById("statusText").value =
+    smartTexts[index];
+
+  createStatus();
+
+}
+
+
+/* ---------------- CANVAS DOWNLOAD ---------------- */
 
 function downloadStatus(){
 
   const text =
-    document.getElementById("message").value;
+    document.getElementById("statusText").value.trim();
 
-  const blob =
-    new Blob([text],{type:"text/plain"});
+  if(!text){
+    alert("Status இல்லை.");
+    return;
+  }
 
-  const url =
-    URL.createObjectURL(blob);
+  const canvas =
+    document.getElementById("canvas");
 
-  const a =
-    document.createElement("a");
+  const ctx =
+    canvas.getContext("2d");
 
-  a.href=url;
-  a.download="vizhi-status.txt";
-  a.click();
+  const select =
+    document.getElementById("backgroundSelect").value;
 
-  URL.revokeObjectURL(url);
+  let gradient;
+
+  if(select==="blue"){
+    gradient=ctx.createLinearGradient(0,0,1080,1080);
+    gradient.addColorStop(0,"#1261d6");
+    gradient.addColorStop(1,"#168be8");
+  }
+
+  if(select==="sunset"){
+    gradient=ctx.createLinearGradient(0,0,1080,1080);
+    gradient.addColorStop(0,"#ff512f");
+    gradient.addColorStop(1,"#f09819");
+  }
+
+  if(select==="green"){
+    gradient=ctx.createLinearGradient(0,0,1080,1080);
+    gradient.addColorStop(0,"#087f23");
+    gradient.addColorStop(1,"#20d65d");
+  }
+
+  if(select==="purple"){
+    gradient=ctx.createLinearGradient(0,0,1080,1080);
+    gradient.addColorStop(0,"#512da8");
+    gradient.addColorStop(1,"#9c27b0");
+  }
+
+  if(select==="dark"){
+    gradient=ctx.createLinearGradient(0,0,1080,1080);
+    gradient.addColorStop(0,"#111827");
+    gradient.addColorStop(1,"#374151");
+  }
+
+  if(select==="pink"){
+    gradient=ctx.createLinearGradient(0,0,1080,1080);
+    gradient.addColorStop(0,"#ec4899");
+    gradient.addColorStop(1,"#f97316");
+  }
+
+  ctx.fillStyle=gradient;
+  ctx.fillRect(0,0,1080,1080);
+
+  function drawText(){
+
+    ctx.fillStyle="white";
+    ctx.textAlign="center";
+    ctx.textBaseline="middle";
+
+    const lines =
+      text.split("\n");
+
+    let fontSize=60;
+
+    if(text.length>80){
+      fontSize=48;
+    }
+
+    ctx.font =
+      "bold " + fontSize +
+      "px Arial, Noto Sans Tamil, sans-serif";
+
+    const lineHeight =
+      fontSize*1.45;
+
+    const startY =
+      540 - ((lines.length-1)*lineHeight/2);
+
+    lines.forEach((line,i)=>{
+
+      ctx.fillText(
+        line,
+        540,
+        startY+i*lineHeight
+      );
+
+    });
+
+    const link =
+      document.createElement("a");
+
+    link.download =
+      "vizhi-status.png";
+
+    link.href =
+      canvas.toDataURL("image/png");
+
+    link.click();
+
+  }
+
+
+  if(bgImageData){
+
+    const img = new Image();
+
+    img.onload=function(){
+
+      const scale =
+        Math.max(
+          1080/img.width,
+          1080/img.height
+        );
+
+      const w =
+        img.width*scale;
+
+      const h =
+        img.height*scale;
+
+      ctx.globalAlpha=.75;
+
+      ctx.drawImage(
+        img,
+        (1080-w)/2,
+        (1080-h)/2,
+        w,
+        h
+      );
+
+      ctx.globalAlpha=1;
+
+      drawText();
+
+    };
+
+    img.src=bgImageData;
+
+  }else{
+
+    drawText();
+
+  }
+
 }
 
-generateStatus();
+
+/* ---------------- SHARE STATUS ---------------- */
+
+async function shareStatus(){
+
+  const canvas =
+    document.getElementById("canvas");
+
+  const text =
+    document.getElementById("statusText").value;
+
+  canvas.toBlob(async function(blob){
+
+    const file =
+      new File(
+        [blob],
+        "vizhi-status.png",
+        {type:"image/png"}
+      );
+
+    try{
+
+      if(
+        navigator.share &&
+        navigator.canShare &&
+        navigator.canShare({files:[file]})
+      ){
+
+        await navigator.share({
+          title:"VIZHI STATUS",
+          text:text,
+          files:[file]
+        });
+
+      }else if(navigator.share){
+
+        await navigator.share({
+          title:"VIZHI STATUS",
+          text:text
+        });
+
+      }else{
+
+        alert(
+          "இந்த browser-ல் Share வசதி இல்லை. Download செய்து WhatsApp-ல் share செய்யுங்கள்."
+        );
+
+      }
+
+    }catch(error){
+
+      if(error.name!=="AbortError"){
+        alert("Share செய்ய முடியவில்லை.");
+      }
+
+    }
+
+  },"image/png");
+
+}
+
+
+/* ---------------- VIDEO ---------------- */
+
+document.getElementById("videoInput")
+.addEventListener("change",function(e){
+
+  const file=e.target.files[0];
+
+  if(!file) return;
+
+  if(currentVideoURL){
+    URL.revokeObjectURL(currentVideoURL);
+  }
+
+  currentVideoURL=
+    URL.createObjectURL(file);
+
+  const video=
+    document.getElementById("videoPreview");
+
+  video.src=currentVideoURL;
+
+  document.getElementById("videoBox")
+    .classList.remove("hidden");
+
+});
+
+
+function downloadVideo(){
+
+  if(!currentVideoURL){
+    alert("Video தேர்வு செய்யுங்கள்.");
+    return;
+  }
+
+  const a=document.createElement("a");
+
+  a.href=currentVideoURL;
+  a.download="vizhi-video.mp4";
+
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+}
+
+
+async function shareVideo(){
+
+  const input=
+    document.getElementById("videoInput");
+
+  const file=
+    input.files[0];
+
+  if(!file){
+    alert("முதலில் Video தேர்வு செய்யுங்கள்.");
+    return;
+  }
+
+  try{
+
+    if(
+      navigator.share &&
+      navigator.canShare &&
+      navigator.canShare({files:[file]})
+    ){
+
+      await navigator.share({
+        title:"VIZHI STATUS",
+        files:[file]
+      });
+
+    }else{
+
+      alert(
+        "இந்த browser-ல் direct video share இல்லை. Download செய்து WhatsApp-ல் share செய்யுங்கள்."
+      );
+
+    }
+
+  }catch(error){
+
+    if(error.name!=="AbortError"){
+      alert("Share செய்ய முடியவில்லை.");
+    }
+
+  }
+
+}
+
+
+/* ---------------- AUDIO ---------------- */
+
+document.getElementById("audioInput")
+.addEventListener("change",function(e){
+
+  const file=e.target.files[0];
+
+  if(!file) return;
+
+  if(currentAudioURL){
+    URL.revokeObjectURL(currentAudioURL);
+  }
+
+  currentAudioURL=
+    URL.createObjectURL(file);
+
+  document.getElementById("audioPreview")
+    .src=currentAudioURL;
+
+  document.getElementById("audioBox")
+    .classList.remove("hidden");
+
+});
+
+
+function downloadAudio(){
+
+  if(!currentAudioURL){
+    alert("Audio தேர்வு செய்யுங்கள்.");
+    return;
+  }
+
+  const a=document.createElement("a");
+
+  a.href=currentAudioURL;
+  a.download="vizhi-audio";
+
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+}
+
+
+/* ---------------- REELS ---------------- */
+
+document.getElementById("reelsInput")
+.addEventListener("change",function(e){
+
+  const file=e.target.files[0];
+
+  if(!file) return;
+
+  if(currentReelsURL){
+    URL.revokeObjectURL(currentReelsURL);
+  }
+
+  currentReelsURL=
+    URL.createObjectURL(file);
+
+  document.getElementById("reelsPreview")
+    .src=currentReelsURL;
+
+  document.getElementById("reelsBox")
+    .classList.remove("hidden");
+
+});
+
+
+function downloadReels(){
+
+  if(!currentReelsURL){
+    alert("Reels video தேர்வு செய்யுங்கள்.");
+    return;
+  }
+
+  const a=document.createElement("a");
+
+  a.href=currentReelsURL;
+  a.download="vizhi-reels.mp4";
+
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+}
+
+
+async function shareReels(){
+
+  const input=
+    document.getElementById("reelsInput");
+
+  const file=
+    input.files[0];
+
+  if(!file){
+    alert("முதலில் Reels video தேர்வு செய்யுங்கள்.");
+    return;
+  }
+
+  try{
+
+    if(
+      navigator.share &&
+      navigator.canShare &&
+      navigator.canShare({files:[file]})
+    ){
+
+      await navigator.share({
+        title:"VIZHI REELS",
+        files:[file]
+      });
+
+    }else{
+
+      alert(
+        "Direct share இல்லை. Download செய்து WhatsApp/Instagram-ல் share செய்யுங்கள்."
+      );
+
+    }
+
+  }catch(error){
+
+    if(error.name!=="AbortError"){
+      alert("Share செய்ய முடியவில்லை.");
+    }
+
+  }
+
+}
+
+
+/* ---------------- START ---------------- */
+
+createStatus();
 
 </script>
 

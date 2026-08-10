@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIZHI STATUS</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#07152f,#102d5c,#07152f);
+  color:white;
+  min-height:100vh;
+  padding:20px;
+}
+
+.app{
+  max-width:500px;
+  margin:auto;
+}
+
+.header{
+  text-align:center;
+  padding:20px 10px;
+}
+
+.logo{
+  font-size:42px;
+}
+
+h1{
+  font-size:30px;
+  margin-top:8px;
+}
+
+.subtitle{
+  color:#b9c8e8;
+  margin-top:6px;
+}
+
+.card{
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:22px;
+  padding:20px;
+  margin-top:18px;
+  backdrop-filter:blur(10px);
+}
+
+label{
+  display:block;
+  margin-bottom:8px;
+  font-weight:bold;
+}
+
+textarea{
+  width:100%;
+  min-height:110px;
+  border:0;
+  outline:none;
+  border-radius:15px;
+  padding:15px;
+  font-size:17px;
+  resize:none;
+  background:#fff;
+  color:#111;
+}
+
+select{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:0;
+  margin-top:8px;
+  font-size:16px;
+}
+
+button{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:15px;
+  margin-top:12px;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.generate{
+  background:#20c997;
+  color:white;
+}
+
+.download{
+  background:#4169e1;
+  color:white;
+}
+
+.share{
+  background:#25d366;
+  color:white;
+}
+
+.status{
+  margin-top:20px;
+  min-height:300px;
+  border-radius:20px;
+  padding:30px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:linear-gradient(135deg,#0d47a1,#1976d2);
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+.status-text{
+  font-size:27px;
+  font-weight:bold;
+  line-height:1.4;
+  word-break:break-word;
+}
+
+.footer{
+  text-align:center;
+  color:#9fb0d0;
+  padding:25px 0;
+  font-size:13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="header">
+    <div class="logo">👁️✨</div>
+    <h1>VIZHI STATUS</h1>
+    <div class="subtitle">உங்கள் தினசரி Status உருவாக்குங்கள்</div>
+  </div>
+
+  <div class="card">
+
+    <label>உங்கள் Status</label>
+
+    <textarea id="message"
+      placeholder="உங்கள் message-ஐ இங்கே எழுதுங்கள்...">இன்று ஒரு புதிய நாள் ❤️
+புதிய நம்பிக்கையுடன் தொடங்குவோம்!</textarea>
+
+    <label style="margin-top:18px;">Background</label>
+
+    <select id="theme">
+      <option value="blue">💙 Blue</option>
+      <option value="green">💚 Green</option>
+      <option value="purple">💜 Purple</option>
+      <option value="sunset">🌅 Sunset</option>
+      <option value="dark">🖤 Dark</option>
+    </select>
+
+    <button class="generate" onclick="generateStatus()">
+      ✨ STATUS உருவாக்கு
+    </button>
+
+    <button class="download" onclick="downloadStatus()">
+      📥 Download
+    </button>
+
+    <button class="share" onclick="shareStatus()">
+      📤 Share
+    </button>
+
+  </div>
+
+  <div id="status" class="status">
+    <div id="statusText" class="status-text">
+      இன்று ஒரு புதிய நாள் ❤️<br>
+      புதிய நம்பிக்கையுடன் தொடங்குவோம்!
+    </div>
+  </div>
+
+  <div class="footer">
+    © 2026 VIZHI STATUS
+  </div>
+
+</div>
+
+<script>
+
+function generateStatus(){
+
+  const message =
+    document.getElementById("message").value;
+
+  const theme =
+    document.getElementById("theme").value;
+
+  document.getElementById("statusText")
+    .innerText = message;
+
+  const status =
+    document.getElementById("status");
+
+  if(theme === "blue"){
+    status.style.background =
+      "linear-gradient(135deg,#0d47a1,#1976d2)";
+  }
+
+  if(theme === "green"){
+    status.style.background =
+      "linear-gradient(135deg,#087f23,#20c997)";
+  }
+
+  if(theme === "purple"){
+    status.style.background =
+      "linear-gradient(135deg,#512da8,#9c27b0)";
+  }
+
+  if(theme === "sunset"){
+    status.style.background =
+      "linear-gradient(135deg,#ff512f,#dd2476)";
+  }
+
+  if(theme === "dark"){
+    status.style.background =
+      "linear-gradient(135deg,#111,#333)";
+  }
+}
+
+async function shareStatus(){
+
+  const text =
+    document.getElementById("message").value;
+
+  if(navigator.share){
+
+    try{
+      await navigator.share({
+        title:"VIZHI STATUS",
+        text:text
+      });
+    }catch(e){}
+    
+  }else{
+    alert("இந்த phone-ல் Share option கிடைக்கவில்லை.");
+  }
+}
+
+function downloadStatus(){
+
+  const text =
+    document.getElementById("message").value;
+
+  const blob =
+    new Blob([text],{type:"text/plain"});
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const a =
+    document.createElement("a");
+
+  a.href=url;
+  a.download="vizhi-status.txt";
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+
+generateStatus();
+
+</script>
+
+</body>
+  </html>

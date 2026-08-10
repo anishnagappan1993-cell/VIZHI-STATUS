@@ -3,985 +3,390 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#07152f">
-<title>VIZHI STATUS</title>
-
+<title>Vizhi Status</title>
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+  :root{
+    --bg:#08080b;
+    --bg2:#0f0f14;
+    --card:#15151b;
+    --card-border:#232330;
+    --accent:#8b5cf6;
+    --accent2:#22d3ee;
+    --pink:#f472b6;
+    --text:#f5f5f7;
+    --muted:#8a8a9a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 20% 0%, rgba(139,92,246,0.18), transparent 40%),
+      radial-gradient(circle at 80% 10%, rgba(34,211,238,0.14), transparent 40%),
+      var(--bg);
+    color:var(--text);
+    font-family:"Noto Sans Tamil","Segoe UI",sans-serif;
+    padding-bottom:60px;
+    min-height:100vh;
+  }
 
-body{
-  font-family:Arial,"Noto Sans Tamil",sans-serif;
-  background:linear-gradient(135deg,#07152f,#123b78,#07152f);
-  color:white;
-  min-height:100vh;
-  padding:15px;
-}
+  header{
+    padding:34px 16px 22px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  header::before{
+    content:"";
+    position:absolute;
+    top:-60px;left:50%;
+    transform:translateX(-50%);
+    width:260px;height:180px;
+    background:radial-gradient(circle, rgba(139,92,246,0.35), transparent 70%);
+    filter:blur(10px);
+  }
+  .logo{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:26px;
+    font-weight:800;
+    letter-spacing:0.5px;
+  }
+  .logo .eye{
+    font-size:22px;
+  }
+  .logo span.brand{
+    background:linear-gradient(90deg,var(--accent),var(--accent2),var(--pink));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  header p{
+    position:relative;
+    font-size:13px;
+    color:var(--muted);
+    margin-top:6px;
+  }
 
-.app{
-  max-width:650px;
-  margin:auto;
-}
+  .searchWrap{ padding:16px 16px 4px; }
+  .searchWrap input{
+    width:100%;
+    padding:12px 16px;
+    border-radius:24px;
+    border:1px solid var(--card-border);
+    background:var(--card);
+    color:var(--text);
+    font-size:14px;
+    outline:none;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+  }
+  .searchWrap input:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(139,92,246,0.18);
+  }
+  .searchWrap input::placeholder{ color:var(--muted); }
 
-header{
-  text-align:center;
-  padding:18px 5px 25px;
-}
+  .tabs{
+    display:flex;
+    overflow-x:auto;
+    gap:8px;
+    padding:16px 12px 10px;
+    scrollbar-width:none;
+  }
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab{
+    flex:0 0 auto;
+    padding:9px 18px;
+    border-radius:22px;
+    background:var(--card);
+    color:var(--muted);
+    font-size:13px;
+    font-weight:600;
+    white-space:nowrap;
+    cursor:pointer;
+    border:1px solid var(--card-border);
+    transition:all 0.15s ease;
+  }
+  .tab.active{
+    background:linear-gradient(90deg,var(--accent),var(--accent2));
+    color:#0a0a12;
+    border-color:transparent;
+    box-shadow:0 4px 14px rgba(139,92,246,0.35);
+  }
 
-.logo{
-  font-size:48px;
-}
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    padding:8px 14px;
+  }
+  .item{
+    position:relative;
+    border-radius:16px;
+    overflow:hidden;
+    background:var(--card);
+    aspect-ratio:9/16;
+    border:1px solid var(--card-border);
+    box-shadow:0 6px 18px rgba(0,0,0,0.35);
+  }
+  .item video{ width:100%; height:100%; object-fit:cover; pointer-events:none; }
+  .item .badge{
+    position:absolute; top:8px; left:8px;
+    background:rgba(0,0,0,0.55);
+    backdrop-filter:blur(4px);
+    font-size:11px; font-weight:600;
+    padding:3px 10px; border-radius:12px;
+    border:1px solid rgba(255,255,255,0.08);
+  }
+  .item .fav{
+    position:absolute; top:6px; right:6px;
+    width:32px;height:32px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(0,0,0,0.5);
+    backdrop-filter:blur(4px);
+    border-radius:50%;
+    font-size:15px;
+    cursor:pointer;
+    z-index:2;
+    border:1px solid rgba(255,255,255,0.08);
+    color:#fff;
+  }
+  .item .fav.active{ color:var(--pink); }
+  .item .play{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+  .item .play::before{
+    content:"▶";
+    width:46px;height:46px;
+    background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(4px);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;
+  }
+  .item::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(to top, rgba(0,0,0,0.35), transparent 40%);
+    pointer-events:none;
+  }
 
-h1{
-  font-size:32px;
-  margin:5px 0;
-}
+  /* modal */
+  .modal{
+    display:none;
+    position:fixed;inset:0;
+    background:rgba(5,5,8,0.95);
+    backdrop-filter:blur(6px);
+    z-index:50;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+  }
+  .modal.open{display:flex;}
+  .modal video{
+    max-height:72vh; max-width:92vw; border-radius:18px;
+    box-shadow:0 10px 40px rgba(139,92,246,0.25);
+  }
+  .modal .actions{
+    display:flex; gap:10px; margin-top:18px; flex-wrap:wrap; justify-content:center; padding:0 16px;
+  }
+  .modal button{
+    padding:11px 20px;
+    border-radius:24px;
+    border:none;
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .btn-download{ background:linear-gradient(90deg,var(--accent2),var(--accent)); color:#08080b; }
+  .btn-share{ background:#25d366; color:#04300f; }
+  .btn-fav{ background:linear-gradient(90deg,var(--pink),#fb7185); color:#2a0512; }
+  .btn-close{ background:#1c1c26; color:#fff; border:1px solid var(--card-border); }
 
-.subtitle{
-  color:#cbd7ef;
-  font-size:17px;
-}
-
-.card{
-  background:rgba(255,255,255,.10);
-  border:1px solid rgba(255,255,255,.22);
-  border-radius:22px;
-  padding:20px;
-  margin-bottom:18px;
-  backdrop-filter:blur(10px);
-}
-
-label{
-  display:block;
-  font-weight:bold;
-  font-size:18px;
-  margin-bottom:10px;
-}
-
-textarea,
-select,
-input[type="file"]{
-  width:100%;
-  border:0;
-  border-radius:16px;
-  padding:15px;
-  font-size:17px;
-  background:white;
-  color:#111;
-  margin-bottom:15px;
-}
-
-textarea{
-  min-height:130px;
-  resize:vertical;
-}
-
-button{
-  width:100%;
-  border:0;
-  border-radius:16px;
-  padding:15px;
-  font-size:18px;
-  font-weight:bold;
-  margin-top:10px;
-  cursor:pointer;
-}
-
-.btn-main{
-  background:#20d6a1;
-  color:white;
-}
-
-.btn-blue{
-  background:#4169e1;
-  color:white;
-}
-
-.btn-green{
-  background:#20d65d;
-  color:white;
-}
-
-.btn-purple{
-  background:#8b5cf6;
-  color:white;
-}
-
-.btn-dark{
-  background:#18243b;
-  color:white;
-  border:1px solid #52627c;
-}
-
-button:active{
-  transform:scale(.98);
-}
-
-.status-preview{
-  min-height:330px;
-  border-radius:25px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:35px 25px;
-  margin-top:18px;
-  font-size:32px;
-  font-weight:bold;
-  line-height:1.35;
-  white-space:pre-wrap;
-  word-break:break-word;
-  box-shadow:0 15px 40px rgba(0,0,0,.30);
-}
-
-.preview-blue{
-  background:linear-gradient(135deg,#1261d6,#168be8);
-}
-
-.preview-sunset{
-  background:linear-gradient(135deg,#ff512f,#f09819);
-}
-
-.preview-green{
-  background:linear-gradient(135deg,#087f23,#20d65d);
-}
-
-.preview-purple{
-  background:linear-gradient(135deg,#512da8,#9c27b0);
-}
-
-.preview-dark{
-  background:linear-gradient(135deg,#111827,#374151);
-}
-
-.preview-pink{
-  background:linear-gradient(135deg,#ec4899,#f97316);
-}
-
-.small-title{
-  font-size:22px;
-  font-weight:bold;
-  margin-bottom:15px;
-}
-
-.suggestions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.suggestion{
-  background:rgba(255,255,255,.12);
-  padding:13px;
-  border-radius:14px;
-  cursor:pointer;
-  text-align:center;
-}
-
-.media-box{
-  background:#020617;
-  border-radius:18px;
-  padding:12px;
-  margin-top:12px;
-}
-
-video,
-audio{
-  width:100%;
-  border-radius:14px;
-  margin-top:8px;
-}
-
-video{
-  max-height:420px;
-  background:#000;
-}
-
-.info{
-  color:#cbd5e1;
-  font-size:14px;
-  line-height:1.6;
-  margin-top:10px;
-}
-
-footer{
-  text-align:center;
-  color:#aebbd1;
-  padding:20px;
-}
-
-.hidden{
-  display:none;
-}
-
-#canvas{
-  display:none;
-}
+  .empty{ text-align:center; color:var(--muted); padding:50px 16px; font-size:13px; }
 </style>
 </head>
-
 <body>
 
-<div class="app">
-
 <header>
-  <div class="logo">👁️✨</div>
-  <h1>VIZHI STATUS</h1>
-  <div class="subtitle">
-    உங்கள் தினசரி Status உருவாக்குங்கள்
-  </div>
+  <div class="logo"><span class="eye">👁️</span><span class="brand">Vizhi Status</span></div>
+  <p>உங்களுக்கு பிடித்த Status Videos ஒரே இடத்தில்</p>
 </header>
 
-<!-- STATUS CREATOR -->
-<div class="card">
-
-<div class="small-title">📝 உங்கள் Status</div>
-
-<textarea id="statusText"
-placeholder="உங்கள் status-ஐ இங்கே எழுதுங்கள்...">இன்று ஒரு புதிய நாள் ❤️
-புதிய நம்பிக்கையுடன் தொடங்குவோம்!</textarea>
-
-<label>🎨 Background</label>
-
-<select id="backgroundSelect">
-<option value="blue">💙 Blue</option>
-<option value="sunset">🌅 Sunset</option>
-<option value="green">💚 Green</option>
-<option value="purple">💜 Purple</option>
-<option value="dark">🖤 Dark</option>
-<option value="pink">💗 Pink</option>
-</select>
-
-<label>🖼️ Custom Background Image</label>
-<input type="file" id="bgImage" accept="image/*">
-
-<button class="btn-main" onclick="createStatus()">
-✨ STATUS உருவாக்கு
-</button>
-
-<button class="btn-purple" onclick="smartStatus()">
-🤖 Smart Status
-</button>
-
-<button class="btn-blue" onclick="downloadStatus()">
-📥 Download Status
-</button>
-
-<button class="btn-green" onclick="shareStatus()">
-📤 Share Status
-</button>
-
-<div id="statusPreview" class="status-preview preview-blue">
-இன்று ஒரு புதிய நாள் ❤️
-புதிய நம்பிக்கையுடன் தொடங்குவோம்!
+<div class="searchWrap">
+  <input type="text" id="searchBox" placeholder="Video தேடுங்க...">
 </div>
 
+<div class="tabs" id="tabs"></div>
+<div class="grid" id="grid"></div>
+
+<div class="modal" id="modal">
+  <video id="modalVideo" controls playsinline></video>
+  <div class="actions">
+    <button class="btn-download" id="downloadBtn">Download</button>
+    <button class="btn-share" id="shareBtn">Share</button>
+    <button class="btn-fav" id="favBtn">❤ Favorite</button>
+    <button class="btn-close" id="closeBtn">Close</button>
+  </div>
 </div>
-
-
-<!-- SMART STATUS -->
-<div class="card">
-
-<div class="small-title">🤖 Smart Status Ideas</div>
-
-<div class="suggestions">
-
-<div class="suggestion" onclick="useSuggestion(0)">
-🌅 காலை
-</div>
-
-<div class="suggestion" onclick="useSuggestion(1)">
-🌙 இரவு
-</div>
-
-<div class="suggestion" onclick="useSuggestion(2)">
-❤️ காதல்
-</div>
-
-<div class="suggestion" onclick="useSuggestion(3)">
-🔥 Motivation
-</div>
-
-<div class="suggestion" onclick="useSuggestion(4)">
-😊 நட்பு
-</div>
-
-<div class="suggestion" onclick="useSuggestion(5)">
-🙏 நல்ல நாள்
-</div>
-
-</div>
-
-<p class="info">
-இது API இல்லாமல் இயங்கும் Smart Status generator.
-உண்மையான AI உருவாக்க API/backend தேவை.
-</p>
-
-</div>
-
-
-<!-- VIDEO STATUS -->
-<div class="card">
-
-<div class="small-title">🎬 Video Status</div>
-
-<label>Video தேர்வு செய்யுங்கள்</label>
-
-<input type="file"
-id="videoInput"
-accept="video/*">
-
-<div id="videoBox" class="media-box hidden">
-
-<video id="videoPreview" controls></video>
-
-<button class="btn-blue" onclick="downloadVideo()">
-📥 Video Download
-</button>
-
-<button class="btn-green" onclick="shareVideo()">
-📤 Video Share
-</button>
-
-</div>
-
-</div>
-
-
-<!-- AUDIO STATUS -->
-<div class="card">
-
-<div class="small-title">🎵 Audio Status</div>
-
-<label>Audio தேர்வு செய்யுங்கள்</label>
-
-<input type="file"
-id="audioInput"
-accept="audio/*">
-
-<div id="audioBox" class="media-box hidden">
-
-<audio id="audioPreview" controls></audio>
-
-<button class="btn-blue" onclick="downloadAudio()">
-📥 Audio Download
-</button>
-
-</div>
-
-</div>
-
-
-<!-- REELS -->
-<div class="card">
-
-<div class="small-title">🎞️ Reels</div>
-
-<label>Reels Video Upload</label>
-
-<input type="file"
-id="reelsInput"
-accept="video/*">
-
-<div id="reelsBox" class="media-box hidden">
-
-<video id="reelsPreview"
-controls
-playsinline></video>
-
-<button class="btn-purple" onclick="downloadReels()">
-📥 Reels Download
-</button>
-
-<button class="btn-green" onclick="shareReels()">
-📤 Reels Share
-</button>
-
-</div>
-
-</div>
-
-
-<!-- ABOUT -->
-<div class="card">
-
-<div class="small-title">ℹ️ VIZHI STATUS</div>
-
-<p class="info">
-VIZHI STATUS மூலம் தினசரி text status,
-background status, video status, audio மற்றும்
-reels media-ஐ mobile-லேயே பயன்படுத்தலாம்.
-</p>
-
-</div>
-
-<footer>
-© 2026 VIZHI STATUS
-</footer>
-
-</div>
-
-
-<canvas id="canvas" width="1080" height="1080"></canvas>
-
 
 <script>
+  // ----- Sample data (replace src links with your own video URLs) -----
+  const baseCategories = ["All", "Favorites", "Love", "Sad", "Motivation", "Birthday", "Devotional"];
 
-let bgImageData = null;
-let currentVideoURL = null;
-let currentAudioURL = null;
-let currentReelsURL = null;
+  const videos = [
+    {id:1, cat:"Love", src:"https://cdn.coverr.co/videos/coverr-a-couple-on-a-swing-2633/1080p.mp4", title:"Love Status 1"},
+    {id:2, cat:"Sad", src:"https://cdn.coverr.co/videos/coverr-rain-on-window-2570/1080p.mp4", title:"Sad Status 1"},
+    {id:3, cat:"Motivation", src:"https://cdn.coverr.co/videos/coverr-mountain-sunrise-9764/1080p.mp4", title:"Motivation Status 1"},
+    {id:4, cat:"Birthday", src:"https://cdn.coverr.co/videos/coverr-balloons-in-the-sky-9271/1080p.mp4", title:"Birthday Status 1"},
+    {id:5, cat:"Devotional", src:"https://cdn.coverr.co/videos/coverr-temple-bells-5551/1080p.mp4", title:"Devotional Status 1"},
+    {id:6, cat:"Love", src:"https://cdn.coverr.co/videos/coverr-holding-hands-3312/1080p.mp4", title:"Love Status 2"}
+  ];
 
+  const tabsEl = document.getElementById("tabs");
+  const gridEl = document.getElementById("grid");
+  const searchBox = document.getElementById("searchBox");
+  const modal = document.getElementById("modal");
+  const modalVideo = document.getElementById("modalVideo");
+  const downloadBtn = document.getElementById("downloadBtn");
+  const shareBtn = document.getElementById("shareBtn");
+  const favBtn = document.getElementById("favBtn");
+  const closeBtn = document.getElementById("closeBtn");
 
-/* ---------------- STATUS ---------------- */
+  let activeCat = "All";
+  let searchTerm = "";
+  let currentVideo = null;
 
-function createStatus(){
-
-  const text =
-    document.getElementById("statusText").value.trim();
-
-  if(!text){
-    alert("முதலில் Status எழுதுங்கள்.");
-    return;
+  function getFavorites(){
+    return JSON.parse(localStorage.getItem("vizhi_favs") || "[]");
+  }
+  function setFavorites(list){
+    localStorage.setItem("vizhi_favs", JSON.stringify(list));
+  }
+  function isFav(id){
+    return getFavorites().includes(id);
+  }
+  function toggleFav(id){
+    let favs = getFavorites();
+    if(favs.includes(id)){
+      favs = favs.filter(f=>f!==id);
+    } else {
+      favs.push(id);
+    }
+    setFavorites(favs);
   }
 
-  const preview =
-    document.getElementById("statusPreview");
-
-  preview.textContent = text;
-
-  preview.className =
-    "status-preview preview-" +
-    document.getElementById("backgroundSelect").value;
-
-  if(bgImageData){
-    preview.style.backgroundImage =
-      "linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.25)),url('" +
-      bgImageData +
-      "')";
-
-    preview.style.backgroundSize = "cover";
-    preview.style.backgroundPosition = "center";
-  }else{
-    preview.style.backgroundImage = "";
+  function renderTabs(){
+    tabsEl.innerHTML = "";
+    baseCategories.forEach(cat=>{
+      const el = document.createElement("div");
+      el.className = "tab" + (cat===activeCat ? " active" : "");
+      el.textContent = cat;
+      el.onclick = ()=>{ activeCat = cat; renderTabs(); renderGrid(); };
+      tabsEl.appendChild(el);
+    });
   }
-}
 
+  function getFilteredList(){
+    let list = videos;
+    if(activeCat==="Favorites"){
+      const favs = getFavorites();
+      list = list.filter(v=>favs.includes(v.id));
+    } else if(activeCat!=="All"){
+      list = list.filter(v=>v.cat===activeCat);
+    }
+    if(searchTerm.trim()!==""){
+      const q = searchTerm.trim().toLowerCase();
+      list = list.filter(v=> v.title.toLowerCase().includes(q) || v.cat.toLowerCase().includes(q));
+    }
+    return list;
+  }
 
-/* ---------------- BACKGROUND IMAGE ---------------- */
+  function renderGrid(){
+    const list = getFilteredList();
+    gridEl.innerHTML = "";
+    if(list.length===0){
+      gridEl.innerHTML = '<div class="empty">இதுக்கு பொருந்தும் Status videos இல்லை.</div>';
+      return;
+    }
+    list.forEach(v=>{
+      const item = document.createElement("div");
+      item.className = "item";
+      const favActive = isFav(v.id) ? " active" : "";
+      item.innerHTML = `
+        <video src="${v.src}" muted preload="metadata"></video>
+        <span class="badge">${v.cat}</span>
+        <span class="fav${favActive}" data-id="${v.id}">❤</span>
+        <div class="play"></div>
+      `;
+      item.querySelector(".play").onclick = ()=> openModal(v);
+      item.querySelector("video").onclick = ()=> openModal(v);
+      item.querySelector(".fav").onclick = (e)=>{
+        e.stopPropagation();
+        toggleFav(v.id);
+        renderGrid();
+      };
+      gridEl.appendChild(item);
+    });
+  }
 
-document.getElementById("bgImage")
-.addEventListener("change",function(e){
+  function openModal(v){
+    currentVideo = v;
+    modalVideo.src = v.src;
+    modal.classList.add("open");
+    modalVideo.play();
+    updateFavBtn();
+  }
 
-  const file = e.target.files[0];
+  function updateFavBtn(){
+    if(!currentVideo) return;
+    favBtn.textContent = isFav(currentVideo.id) ? "❤ Saved" : "❤ Favorite";
+  }
 
-  if(!file) return;
-
-  const reader = new FileReader();
-
-  reader.onload = function(event){
-
-    bgImageData = event.target.result;
-
-    createStatus();
-
+  downloadBtn.onclick = ()=>{
+    if(!currentVideo) return;
+    const a = document.createElement("a");
+    a.href = currentVideo.src;
+    a.download = currentVideo.title + ".mp4";
+    a.click();
   };
 
-  reader.readAsDataURL(file);
-
-});
-
-
-/* ---------------- SMART STATUS ---------------- */
-
-const smartTexts = [
-
-"🌅 காலை வணக்கம் ❤️\nஇன்றைய நாள் இனிய நாளாக அமையட்டும்!",
-
-"🌙 இனிய இரவு ❤️\nநிம்மதியான தூக்கம் கிடைக்கட்டும்!",
-
-"❤️ உண்மையான அன்பு இருந்தால்\nதூரமும் ஒரு பிரச்சனை இல்லை!",
-
-"🔥 இன்று கஷ்டப்பட்டால்\nநாளை வெற்றி நிச்சயம்!",
-
-"😊 நல்ல நண்பர்கள் வாழ்க்கையின்\nமிகப்பெரிய பரிசு!",
-
-"🙏 இன்று நடந்ததற்கும்\nநாளை நடக்கப்போகிறதற்கும் நன்றி!"
-
-];
-
-
-function smartStatus(){
-
-  const random =
-    Math.floor(Math.random()*smartTexts.length);
-
-  document.getElementById("statusText").value =
-    smartTexts[random];
-
-  createStatus();
-}
-
-
-function useSuggestion(index){
-
-  document.getElementById("statusText").value =
-    smartTexts[index];
-
-  createStatus();
-
-}
-
-
-/* ---------------- CANVAS DOWNLOAD ---------------- */
-
-function downloadStatus(){
-
-  const text =
-    document.getElementById("statusText").value.trim();
-
-  if(!text){
-    alert("Status இல்லை.");
-    return;
-  }
-
-  const canvas =
-    document.getElementById("canvas");
-
-  const ctx =
-    canvas.getContext("2d");
-
-  const select =
-    document.getElementById("backgroundSelect").value;
-
-  let gradient;
-
-  if(select==="blue"){
-    gradient=ctx.createLinearGradient(0,0,1080,1080);
-    gradient.addColorStop(0,"#1261d6");
-    gradient.addColorStop(1,"#168be8");
-  }
-
-  if(select==="sunset"){
-    gradient=ctx.createLinearGradient(0,0,1080,1080);
-    gradient.addColorStop(0,"#ff512f");
-    gradient.addColorStop(1,"#f09819");
-  }
-
-  if(select==="green"){
-    gradient=ctx.createLinearGradient(0,0,1080,1080);
-    gradient.addColorStop(0,"#087f23");
-    gradient.addColorStop(1,"#20d65d");
-  }
-
-  if(select==="purple"){
-    gradient=ctx.createLinearGradient(0,0,1080,1080);
-    gradient.addColorStop(0,"#512da8");
-    gradient.addColorStop(1,"#9c27b0");
-  }
-
-  if(select==="dark"){
-    gradient=ctx.createLinearGradient(0,0,1080,1080);
-    gradient.addColorStop(0,"#111827");
-    gradient.addColorStop(1,"#374151");
-  }
-
-  if(select==="pink"){
-    gradient=ctx.createLinearGradient(0,0,1080,1080);
-    gradient.addColorStop(0,"#ec4899");
-    gradient.addColorStop(1,"#f97316");
-  }
-
-  ctx.fillStyle=gradient;
-  ctx.fillRect(0,0,1080,1080);
-
-  function drawText(){
-
-    ctx.fillStyle="white";
-    ctx.textAlign="center";
-    ctx.textBaseline="middle";
-
-    const lines =
-      text.split("\n");
-
-    let fontSize=60;
-
-    if(text.length>80){
-      fontSize=48;
-    }
-
-    ctx.font =
-      "bold " + fontSize +
-      "px Arial, Noto Sans Tamil, sans-serif";
-
-    const lineHeight =
-      fontSize*1.45;
-
-    const startY =
-      540 - ((lines.length-1)*lineHeight/2);
-
-    lines.forEach((line,i)=>{
-
-      ctx.fillText(
-        line,
-        540,
-        startY+i*lineHeight
-      );
-
-    });
-
-    const link =
-      document.createElement("a");
-
-    link.download =
-      "vizhi-status.png";
-
-    link.href =
-      canvas.toDataURL("image/png");
-
-    link.click();
-
-  }
-
-
-  if(bgImageData){
-
-    const img = new Image();
-
-    img.onload=function(){
-
-      const scale =
-        Math.max(
-          1080/img.width,
-          1080/img.height
-        );
-
-      const w =
-        img.width*scale;
-
-      const h =
-        img.height*scale;
-
-      ctx.globalAlpha=.75;
-
-      ctx.drawImage(
-        img,
-        (1080-w)/2,
-        (1080-h)/2,
-        w,
-        h
-      );
-
-      ctx.globalAlpha=1;
-
-      drawText();
-
+  shareBtn.onclick = async ()=>{
+    if(!currentVideo) return;
+    const shareData = {
+      title: currentVideo.title,
+      text: currentVideo.title + " - Vizhi Status",
+      url: currentVideo.src
     };
-
-    img.src=bgImageData;
-
-  }else{
-
-    drawText();
-
-  }
-
-}
-
-
-/* ---------------- SHARE STATUS ---------------- */
-
-async function shareStatus(){
-
-  const canvas =
-    document.getElementById("canvas");
-
-  const text =
-    document.getElementById("statusText").value;
-
-  canvas.toBlob(async function(blob){
-
-    const file =
-      new File(
-        [blob],
-        "vizhi-status.png",
-        {type:"image/png"}
-      );
-
-    try{
-
-      if(
-        navigator.share &&
-        navigator.canShare &&
-        navigator.canShare({files:[file]})
-      ){
-
-        await navigator.share({
-          title:"VIZHI STATUS",
-          text:text,
-          files:[file]
-        });
-
-      }else if(navigator.share){
-
-        await navigator.share({
-          title:"VIZHI STATUS",
-          text:text
-        });
-
-      }else{
-
-        alert(
-          "இந்த browser-ல் Share வசதி இல்லை. Download செய்து WhatsApp-ல் share செய்யுங்கள்."
-        );
-
-      }
-
-    }catch(error){
-
-      if(error.name!=="AbortError"){
-        alert("Share செய்ய முடியவில்லை.");
-      }
-
+    if(navigator.share){
+      try{ await navigator.share(shareData); }catch(e){}
+    } else {
+      const waUrl = "https://wa.me/?text=" + encodeURIComponent(currentVideo.title + " " + currentVideo.src);
+      window.open(waUrl, "_blank");
     }
-
-  },"image/png");
-
-}
-
-
-/* ---------------- VIDEO ---------------- */
-
-document.getElementById("videoInput")
-.addEventListener("change",function(e){
-
-  const file=e.target.files[0];
-
-  if(!file) return;
-
-  if(currentVideoURL){
-    URL.revokeObjectURL(currentVideoURL);
-  }
-
-  currentVideoURL=
-    URL.createObjectURL(file);
-
-  const video=
-    document.getElementById("videoPreview");
-
-  video.src=currentVideoURL;
-
-  document.getElementById("videoBox")
-    .classList.remove("hidden");
-
-});
-
-
-function downloadVideo(){
-
-  if(!currentVideoURL){
-    alert("Video தேர்வு செய்யுங்கள்.");
-    return;
-  }
-
-  const a=document.createElement("a");
-
-  a.href=currentVideoURL;
-  a.download="vizhi-video.mp4";
-
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-
-}
-
-
-async function shareVideo(){
-
-  const input=
-    document.getElementById("videoInput");
-
-  const file=
-    input.files[0];
-
-  if(!file){
-    alert("முதலில் Video தேர்வு செய்யுங்கள்.");
-    return;
-  }
-
-  try{
-
-    if(
-      navigator.share &&
-      navigator.canShare &&
-      navigator.canShare({files:[file]})
-    ){
-
-      await navigator.share({
-        title:"VIZHI STATUS",
-        files:[file]
-      });
-
-    }else{
-
-      alert(
-        "இந்த browser-ல் direct video share இல்லை. Download செய்து WhatsApp-ல் share செய்யுங்கள்."
-      );
-
-    }
-
-  }catch(error){
-
-    if(error.name!=="AbortError"){
-      alert("Share செய்ய முடியவில்லை.");
-    }
-
-  }
-
-}
-
-
-/* ---------------- AUDIO ---------------- */
-
-document.getElementById("audioInput")
-.addEventListener("change",function(e){
-
-  const file=e.target.files[0];
-
-  if(!file) return;
-
-  if(currentAudioURL){
-    URL.revokeObjectURL(currentAudioURL);
-  }
-
-  currentAudioURL=
-    URL.createObjectURL(file);
-
-  document.getElementById("audioPreview")
-    .src=currentAudioURL;
-
-  document.getElementById("audioBox")
-    .classList.remove("hidden");
-
-});
-
-
-function downloadAudio(){
-
-  if(!currentAudioURL){
-    alert("Audio தேர்வு செய்யுங்கள்.");
-    return;
-  }
-
-  const a=document.createElement("a");
-
-  a.href=currentAudioURL;
-  a.download="vizhi-audio";
-
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-
-}
-
-
-/* ---------------- REELS ---------------- */
-
-document.getElementById("reelsInput")
-.addEventListener("change",function(e){
-
-  const file=e.target.files[0];
-
-  if(!file) return;
-
-  if(currentReelsURL){
-    URL.revokeObjectURL(currentReelsURL);
-  }
-
-  currentReelsURL=
-    URL.createObjectURL(file);
-
-  document.getElementById("reelsPreview")
-    .src=currentReelsURL;
-
-  document.getElementById("reelsBox")
-    .classList.remove("hidden");
-
-});
-
-
-function downloadReels(){
-
-  if(!currentReelsURL){
-    alert("Reels video தேர்வு செய்யுங்கள்.");
-    return;
-  }
-
-  const a=document.createElement("a");
-
-  a.href=currentReelsURL;
-  a.download="vizhi-reels.mp4";
-
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-
-}
-
-
-async function shareReels(){
-
-  const input=
-    document.getElementById("reelsInput");
-
-  const file=
-    input.files[0];
-
-  if(!file){
-    alert("முதலில் Reels video தேர்வு செய்யுங்கள்.");
-    return;
-  }
-
-  try{
-
-    if(
-      navigator.share &&
-      navigator.canShare &&
-      navigator.canShare({files:[file]})
-    ){
-
-      await navigator.share({
-        title:"VIZHI REELS",
-        files:[file]
-      });
-
-    }else{
-
-      alert(
-        "Direct share இல்லை. Download செய்து WhatsApp/Instagram-ல் share செய்யுங்கள்."
-      );
-
-    }
-
-  }catch(error){
-
-    if(error.name!=="AbortError"){
-      alert("Share செய்ய முடியவில்லை.");
-    }
-
-  }
-
-}
-
-
-/* ---------------- START ---------------- */
-
-createStatus();
-
+  };
+
+  favBtn.onclick = ()=>{
+    if(!currentVideo) return;
+    toggleFav(currentVideo.id);
+    updateFavBtn();
+    renderGrid();
+  };
+
+  closeBtn.onclick = ()=>{
+    modal.classList.remove("open");
+    modalVideo.pause();
+    modalVideo.src = "";
+    currentVideo = null;
+  };
+
+  searchBox.oninput = (e)=>{
+    searchTerm = e.target.value;
+    renderGrid();
+  };
+
+  renderTabs();
+  renderGrid();
 </script>
 
 </body>
-  </html>
+</html>

@@ -2,391 +2,214 @@
 <html lang="ta">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vizhi Status</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101426">
+<title>VIZHI STATUS</title>
+
 <style>
-  :root{
-    --bg:#08080b;
-    --bg2:#0f0f14;
-    --card:#15151b;
-    --card-border:#232330;
-    --accent:#8b5cf6;
-    --accent2:#22d3ee;
-    --pink:#f472b6;
-    --text:#f5f5f7;
-    --muted:#8a8a9a;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{
-    background:
-      radial-gradient(circle at 20% 0%, rgba(139,92,246,0.18), transparent 40%),
-      radial-gradient(circle at 80% 10%, rgba(34,211,238,0.14), transparent 40%),
-      var(--bg);
-    color:var(--text);
-    font-family:"Noto Sans Tamil","Segoe UI",sans-serif;
-    padding-bottom:60px;
-    min-height:100vh;
-  }
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-  header{
-    padding:34px 16px 22px;
-    text-align:center;
-    position:relative;
-    overflow:hidden;
-  }
-  header::before{
-    content:"";
-    position:absolute;
-    top:-60px;left:50%;
-    transform:translateX(-50%);
-    width:260px;height:180px;
-    background:radial-gradient(circle, rgba(139,92,246,0.35), transparent 70%);
-    filter:blur(10px);
-  }
-  .logo{
-    position:relative;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    font-size:26px;
-    font-weight:800;
-    letter-spacing:0.5px;
-  }
-  .logo .eye{
-    font-size:22px;
-  }
-  .logo span.brand{
-    background:linear-gradient(90deg,var(--accent),var(--accent2),var(--pink));
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-  }
-  header p{
-    position:relative;
-    font-size:13px;
-    color:var(--muted);
-    margin-top:6px;
-  }
+body{
+  font-family:Arial,"Noto Sans Tamil",sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%,#4f46e544,transparent 35%),
+    radial-gradient(circle at 90% 20%,#06b6d444,transparent 35%),
+    #090d18;
+  color:#fff;
+  min-height:100vh;
+  padding-bottom:40px;
+}
 
-  .searchWrap{ padding:16px 16px 4px; }
-  .searchWrap input{
-    width:100%;
-    padding:12px 16px;
-    border-radius:24px;
-    border:1px solid var(--card-border);
-    background:var(--card);
-    color:var(--text);
-    font-size:14px;
-    outline:none;
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
-  }
-  .searchWrap input:focus{
-    border-color:var(--accent);
-    box-shadow:0 0 0 3px rgba(139,92,246,0.18);
-  }
-  .searchWrap input::placeholder{ color:var(--muted); }
+.app{
+  max-width:700px;
+  margin:auto;
+}
 
-  .tabs{
-    display:flex;
-    overflow-x:auto;
-    gap:8px;
-    padding:16px 12px 10px;
-    scrollbar-width:none;
-  }
-  .tabs::-webkit-scrollbar{display:none;}
-  .tab{
-    flex:0 0 auto;
-    padding:9px 18px;
-    border-radius:22px;
-    background:var(--card);
-    color:var(--muted);
-    font-size:13px;
-    font-weight:600;
-    white-space:nowrap;
-    cursor:pointer;
-    border:1px solid var(--card-border);
-    transition:all 0.15s ease;
-  }
-  .tab.active{
-    background:linear-gradient(90deg,var(--accent),var(--accent2));
-    color:#0a0a12;
-    border-color:transparent;
-    box-shadow:0 4px 14px rgba(139,92,246,0.35);
-  }
+header{
+  text-align:center;
+  padding:28px 16px 18px;
+}
 
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-    padding:8px 14px;
-  }
-  .item{
-    position:relative;
-    border-radius:16px;
-    overflow:hidden;
-    background:var(--card);
-    aspect-ratio:9/16;
-    border:1px solid var(--card-border);
-    box-shadow:0 6px 18px rgba(0,0,0,0.35);
-  }
-  .item video{ width:100%; height:100%; object-fit:cover; pointer-events:none; }
-  .item .badge{
-    position:absolute; top:8px; left:8px;
-    background:rgba(0,0,0,0.55);
-    backdrop-filter:blur(4px);
-    font-size:11px; font-weight:600;
-    padding:3px 10px; border-radius:12px;
-    border:1px solid rgba(255,255,255,0.08);
-  }
-  .item .fav{
-    position:absolute; top:6px; right:6px;
-    width:32px;height:32px;
-    display:flex;align-items:center;justify-content:center;
-    background:rgba(0,0,0,0.5);
-    backdrop-filter:blur(4px);
-    border-radius:50%;
-    font-size:15px;
-    cursor:pointer;
-    z-index:2;
-    border:1px solid rgba(255,255,255,0.08);
-    color:#fff;
-  }
-  .item .fav.active{ color:var(--pink); }
-  .item .play{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
-  .item .play::before{
-    content:"▶";
-    width:46px;height:46px;
-    background:rgba(0,0,0,0.45);
-    backdrop-filter:blur(4px);
-    border:1px solid rgba(255,255,255,0.12);
-    border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-size:16px;
-  }
-  .item::after{
-    content:"";
-    position:absolute; inset:0;
-    background:linear-gradient(to top, rgba(0,0,0,0.35), transparent 40%);
-    pointer-events:none;
-  }
+.logo{
+  font-size:52px;
+}
 
-  /* modal */
-  .modal{
-    display:none;
-    position:fixed;inset:0;
-    background:rgba(5,5,8,0.95);
-    backdrop-filter:blur(6px);
-    z-index:50;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-  }
-  .modal.open{display:flex;}
-  .modal video{
-    max-height:72vh; max-width:92vw; border-radius:18px;
-    box-shadow:0 10px 40px rgba(139,92,246,0.25);
-  }
-  .modal .actions{
-    display:flex; gap:10px; margin-top:18px; flex-wrap:wrap; justify-content:center; padding:0 16px;
-  }
-  .modal button{
-    padding:11px 20px;
-    border-radius:24px;
-    border:none;
-    font-size:13px;
-    font-weight:700;
-    cursor:pointer;
-  }
-  .btn-download{ background:linear-gradient(90deg,var(--accent2),var(--accent)); color:#08080b; }
-  .btn-share{ background:#25d366; color:#04300f; }
-  .btn-fav{ background:linear-gradient(90deg,var(--pink),#fb7185); color:#2a0512; }
-  .btn-close{ background:#1c1c26; color:#fff; border:1px solid var(--card-border); }
+h1{
+  font-size:30px;
+  margin-top:4px;
+}
 
-  .empty{ text-align:center; color:var(--muted); padding:50px 16px; font-size:13px; }
-</style>
-</head>
-<body>
+.subtitle{
+  color:#bfc7da;
+  margin-top:7px;
+  font-size:16px;
+}
 
-<header>
-  <div class="logo"><span class="eye">👁️</span><span class="brand">Vizhi Status</span></div>
-  <p>உங்களுக்கு பிடித்த Status Videos ஒரே இடத்தில்</p>
-</header>
+.nav{
+  display:flex;
+  gap:8px;
+  padding:8px 12px;
+  overflow-x:auto;
+}
 
-<div class="searchWrap">
-  <input type="text" id="searchBox" placeholder="Video தேடுங்க...">
-</div>
+.nav button{
+  flex:1;
+  min-width:90px;
+  border:0;
+  border-radius:14px;
+  padding:13px 10px;
+  background:#171d31;
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+}
 
-<div class="tabs" id="tabs"></div>
-<div class="grid" id="grid"></div>
+.nav button.active{
+  background:linear-gradient(135deg,#8b5cf6,#06b6d4);
+}
 
-<div class="modal" id="modal">
-  <video id="modalVideo" controls playsinline></video>
-  <div class="actions">
-    <button class="btn-download" id="downloadBtn">Download</button>
-    <button class="btn-share" id="shareBtn">Share</button>
-    <button class="btn-fav" id="favBtn">❤ Favorite</button>
-    <button class="btn-close" id="closeBtn">Close</button>
-  </div>
-</div>
+.section{
+  display:none;
+  padding:12px;
+}
 
-<script>
-  // ----- Sample data (replace src links with your own video URLs) -----
-  const baseCategories = ["All", "Favorites", "Love", "Sad", "Motivation", "Birthday", "Devotional"];
+.section.active{
+  display:block;
+}
 
-  const videos = [
-    {id:1, cat:"Love", src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4", title:"Love Status 1"},
-    {id:2, cat:"Sad", src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/friday.mp4", title:"Sad Status 1"},
-    {id:3, cat:"Motivation", src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4", title:"Motivation Status 1"},
-    {id:4, cat:"Birthday", src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/friday.mp4", title:"Birthday Status 1"},
-    {id:5, cat:"Devotional", src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4", title:"Devotional Status 1"},
-    {id:6, cat:"Love", src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/friday.mp4", title:"Love Status 2"}
-  ];
+.card{
+  background:#12182aee;
+  border:1px solid #2d3854;
+  border-radius:22px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 12px 30px #0005;
+}
 
-  const tabsEl = document.getElementById("tabs");
-  const gridEl = document.getElementById("grid");
-  const searchBox = document.getElementById("searchBox");
-  const modal = document.getElementById("modal");
-  const modalVideo = document.getElementById("modalVideo");
-  const downloadBtn = document.getElementById("downloadBtn");
-  const shareBtn = document.getElementById("shareBtn");
-  const favBtn = document.getElementById("favBtn");
-  const closeBtn = document.getElementById("closeBtn");
+label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:8px;
+}
 
-  let activeCat = "All";
-  let searchTerm = "";
-  let currentVideo = null;
+textarea,
+select,
+input{
+  width:100%;
+  border:1px solid #39445f;
+  background:#080c16;
+  color:#fff;
+  border-radius:14px;
+  padding:14px;
+  font-size:16px;
+  outline:none;
+}
 
-  function getFavorites(){
-    return JSON.parse(localStorage.getItem("vizhi_favs") || "[]");
-  }
-  function setFavorites(list){
-    localStorage.setItem("vizhi_favs", JSON.stringify(list));
-  }
-  function isFav(id){
-    return getFavorites().includes(id);
-  }
-  function toggleFav(id){
-    let favs = getFavorites();
-    if(favs.includes(id)){
-      favs = favs.filter(f=>f!==id);
-    } else {
-      favs.push(id);
-    }
-    setFavorites(favs);
-  }
+textarea{
+  min-height:120px;
+  resize:vertical;
+}
 
-  function renderTabs(){
-    tabsEl.innerHTML = "";
-    baseCategories.forEach(cat=>{
-      const el = document.createElement("div");
-      el.className = "tab" + (cat===activeCat ? " active" : "");
-      el.textContent = cat;
-      el.onclick = ()=>{ activeCat = cat; renderTabs(); renderGrid(); };
-      tabsEl.appendChild(el);
-    });
-  }
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
 
-  function getFilteredList(){
-    let list = videos;
-    if(activeCat==="Favorites"){
-      const favs = getFavorites();
-      list = list.filter(v=>favs.includes(v.id));
-    } else if(activeCat!=="All"){
-      list = list.filter(v=>v.cat===activeCat);
-    }
-    if(searchTerm.trim()!==""){
-      const q = searchTerm.trim().toLowerCase();
-      list = list.filter(v=> v.title.toLowerCase().includes(q) || v.cat.toLowerCase().includes(q));
-    }
-    return list;
-  }
+button.main{
+  width:100%;
+  border:0;
+  border-radius:15px;
+  padding:15px;
+  color:#fff;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:10px;
+  background:linear-gradient(135deg,#8b5cf6,#06b6d4);
+}
 
-  function renderGrid(){
-    const list = getFilteredList();
-    gridEl.innerHTML = "";
-    if(list.length===0){
-      gridEl.innerHTML = '<div class="empty">இதுக்கு பொருந்தும் Status videos இல்லை.</div>';
-      return;
-    }
-    list.forEach(v=>{
-      const item = document.createElement("div");
-      item.className = "item";
-      const favActive = isFav(v.id) ? " active" : "";
-      item.innerHTML = `
-        <video src="${v.src}" muted preload="metadata"></video>
-        <span class="badge">${v.cat}</span>
-        <span class="fav${favActive}" data-id="${v.id}">❤</span>
-        <div class="play"></div>
-      `;
-      item.querySelector(".play").onclick = ()=> openModal(v);
-      item.querySelector("video").onclick = ()=> openModal(v);
-      item.querySelector(".fav").onclick = (e)=>{
-        e.stopPropagation();
-        toggleFav(v.id);
-        renderGrid();
-      };
-      gridEl.appendChild(item);
-    });
-  }
+button.green{
+  background:linear-gradient(135deg,#10b981,#22c55e);
+}
 
-  function openModal(v){
-    currentVideo = v;
-    modalVideo.src = v.src;
-    modal.classList.add("open");
-    modalVideo.play();
-    updateFavBtn();
-  }
+button.blue{
+  background:linear-gradient(135deg,#2563eb,#4f46e5);
+}
 
-  function updateFavBtn(){
-    if(!currentVideo) return;
-    favBtn.textContent = isFav(currentVideo.id) ? "❤ Saved" : "❤ Favorite";
-  }
+button.pink{
+  background:linear-gradient(135deg,#ec4899,#f43f5e);
+}
 
-  downloadBtn.onclick = ()=>{
-    if(!currentVideo) return;
-    const a = document.createElement("a");
-    a.href = currentVideo.src;
-    a.download = currentVideo.title + ".mp4";
-    a.click();
-  };
+button:active{
+  transform:scale(.98);
+}
 
-  shareBtn.onclick = async ()=>{
-    if(!currentVideo) return;
-    const shareData = {
-      title: currentVideo.title,
-      text: currentVideo.title + " - Vizhi Status",
-      url: currentVideo.src
-    };
-    if(navigator.share){
-      try{ await navigator.share(shareData); }catch(e){}
-    } else {
-      const waUrl = "https://wa.me/?text=" + encodeURIComponent(currentVideo.title + " " + currentVideo.src);
-      window.open(waUrl, "_blank");
-    }
-  };
+.preview{
+  width:100%;
+  aspect-ratio:9/16;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:30px;
+  position:relative;
+  overflow:hidden;
+  margin-top:15px;
+  box-shadow:0 15px 35px #0007;
+}
 
-  favBtn.onclick = ()=>{
-    if(!currentVideo) return;
-    toggleFav(currentVideo.id);
-    updateFavBtn();
-    renderGrid();
-  };
+.previewText{
+  font-size:28px;
+  font-weight:800;
+  line-height:1.5;
+  text-shadow:0 3px 12px #0009;
+  word-break:break-word;
+}
 
-  closeBtn.onclick = ()=>{
-    modal.classList.remove("open");
-    modalVideo.pause();
-    modalVideo.src = "";
-    currentVideo = null;
-  };
+.watermark{
+  position:absolute;
+  bottom:18px;
+  left:0;
+  right:0;
+  text-align:center;
+  font-size:13px;
+  opacity:.7;
+}
 
-  searchBox.oninput = (e)=>{
-    searchTerm = e.target.value;
-    renderGrid();
-  };
+.theme1{
+  background:linear-gradient(135deg,#ff416c,#ff4b2b);
+}
 
-  renderTabs();
-  renderGrid();
-</script>
+.theme2{
+  background:linear-gradient(135deg,#141e30,#243b55);
+}
 
-</body>
-</html>
+.theme3{
+  background:linear-gradient(135deg,#11998e,#38ef7d);
+}
+
+.theme4{
+  background:linear-gradient(135deg,#654ea3,#eaafc8);
+}
+
+.theme5{
+  background:linear-gradient(135deg,#fc466b,#3f5efb);
+}
+
+.theme6{
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+}
+
+video,
+audio{
+  width:100%;
+  border-radius:18px;
+  margin-top:10px;
+}

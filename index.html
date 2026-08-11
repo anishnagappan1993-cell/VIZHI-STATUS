@@ -1,602 +1,286 @@
-<!DOCTYPE html>
-<html lang="ta">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trend Reels</title>
+import 'package:flutter/material.dart';
 
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+void main() {
+  runApp(const TrendReelsApp());
 }
 
-html,body{
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  background:#000;
-  color:#fff;
-  font-family:Arial,sans-serif;
-}
-
-.app{
-  width:100%;
-  height:100vh;
-  background:#000;
-  position:relative;
-}
-
-/* TOP */
-.top{
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  z-index:20;
-  padding:18px 18px 10px;
-  background:linear-gradient(
-    to bottom,
-    rgba(0,0,0,.9),
-    rgba(0,0,0,.55),
-    transparent
-  );
-}
-
-.logo{
-  font-size:26px;
-  font-weight:800;
-}
-
-.logo span{
-  color:#ff1764;
-}
-
-/* CATEGORIES */
-.categories{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  margin-top:14px;
-  scrollbar-width:none;
-}
-
-.categories::-webkit-scrollbar{
-  display:none;
-}
-
-.cat{
-  flex:none;
-  padding:10px 17px;
-  border-radius:24px;
-  background:rgba(255,255,255,.15);
-  font-size:14px;
-  white-space:nowrap;
-}
-
-.cat.active{
-  background:#ff1764;
-}
-
-/* FEED */
-.feed{
-  width:100%;
-  height:100%;
-  overflow-y:scroll;
-  scroll-snap-type:y mandatory;
-  scrollbar-width:none;
-}
-
-.feed::-webkit-scrollbar{
-  display:none;
-}
-
-/* REEL */
-.reel{
-  width:100%;
-  height:100vh;
-  position:relative;
-  scroll-snap-align:start;
-  background:#111;
-  overflow:hidden;
-}
-
-.reel video{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-  background:#111;
-}
-
-/* DARK GRADIENT */
-.gradient{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  height:48%;
-  background:linear-gradient(
-    transparent,
-    rgba(0,0,0,.88)
-  );
-  pointer-events:none;
-}
-
-/* INFO */
-.info{
-  position:absolute;
-  left:16px;
-  right:90px;
-  bottom:76px;
-  z-index:5;
-}
-
-.user{
-  font-size:17px;
-  font-weight:bold;
-  margin-bottom:10px;
-}
-
-.follow{
-  background:#ff1764;
-  border:0;
-  color:#fff;
-  padding:7px 15px;
-  border-radius:18px;
-  margin-left:8px;
-  font-size:14px;
-}
-
-.caption{
-  font-size:15px;
-  line-height:1.4;
-  margin-bottom:12px;
-}
-
-.music{
-  font-size:13px;
-  opacity:.9;
-}
-
-/* ACTIONS */
-.actions{
-  position:absolute;
-  right:13px;
-  bottom:95px;
-  z-index:8;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:20px;
-}
-
-.action{
-  text-align:center;
-  font-size:12px;
-}
-
-.action button{
-  width:52px;
-  height:52px;
-  border:0;
-  border-radius:50%;
-  background:rgba(0,0,0,.48);
-  color:white;
-  font-size:25px;
-}
-
-.action button.liked{
-  color:#ff1764;
-}
-
-.action div{
-  margin-top:5px;
-}
-
-/* BOTTOM */
-.bottom{
-  position:absolute;
-  bottom:0;
-  left:0;
-  right:0;
-  height:65px;
-  z-index:30;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  background:rgba(0,0,0,.94);
-  border-top:1px solid rgba(255,255,255,.08);
-}
-
-.nav{
-  color:#aaa;
-  text-align:center;
-  font-size:11px;
-}
-
-.nav.active{
-  color:#ff1764;
-}
-
-.nav-icon{
-  font-size:21px;
-  line-height:23px;
-}
-
-.create{
-  width:54px;
-  height:44px;
-  border-radius:14px;
-  background:#ff1764;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  color:white;
-}
-
-/* MOBILE FIX */
-@media(max-width:380px){
-  .logo{
-    font-size:23px;
-  }
-
-  .cat{
-    padding:9px 14px;
-  }
-
-  .info{
-    bottom:73px;
-  }
-
-  .actions{
-    bottom:90px;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<div class="app">
-
-  <!-- TOP -->
-  <div class="top">
-    <div class="logo">
-      Trend <span>Reels</span>
-    </div>
-
-    <div class="categories">
-      <div class="cat active">For You</div>
-      <div class="cat">🔥 Trending</div>
-      <div class="cat">❤️ Love</div>
-      <div class="cat">😂 Comedy</div>
-      <div class="cat">💪 Motivation</div>
-    </div>
-  </div>
-
-
-  <!-- FEED -->
-  <div class="feed" id="feed">
-
-    <!-- REEL 1 -->
-    <section class="reel">
-
-      <video
-        src="https://www.w3schools.com/html/mov_bbb.mp4"
-        muted
-        loop
-        playsinline
-        preload="auto">
-      </video>
-
-      <div class="gradient"></div>
-
-      <div class="info">
-        <div class="user">
-          @TrendCreator
-          <button class="follow">Follow</button>
-        </div>
-
-        <div class="caption">
-          ❤️ வாழ்க்கை அழகானது... ஒவ்வொரு நாளையும் சிறப்போம்!
-        </div>
-
-        <div class="music">
-          🎵 Original Audio - Trend Reels
-        </div>
-      </div>
-
-      <div class="actions">
-
-        <div class="action">
-          <button onclick="likeVideo(this)">❤️</button>
-          <div>12.5K</div>
-        </div>
-
-        <div class="action">
-          <button onclick="commentVideo()">💬</button>
-          <div>256</div>
-        </div>
-
-        <div class="action">
-          <button onclick="shareVideo()">↗️</button>
-          <div>Share</div>
-        </div>
-
-        <div class="action">
-          <button onclick="saveVideo(this)">⬇️</button>
-          <div>Save</div>
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- REEL 2 -->
-    <section class="reel">
-
-      <video
-        src="https://www.w3schools.com/html/mov_bbb.mp4"
-        muted
-        loop
-        playsinline
-        preload="auto">
-      </video>
-
-      <div class="gradient"></div>
-
-      <div class="info">
-        <div class="user">
-          @TrendVideos
-          <button class="follow">Follow</button>
-        </div>
-
-        <div class="caption">
-          🔥 உன் கனவை விடாதே... முயற்சி செய்!
-        </div>
-
-        <div class="music">
-          🎵 Motivation - Trend Reels
-        </div>
-      </div>
-
-      <div class="actions">
-
-        <div class="action">
-          <button onclick="likeVideo(this)">❤️</button>
-          <div>8.2K</div>
-        </div>
-
-        <div class="action">
-          <button onclick="commentVideo()">💬</button>
-          <div>143</div>
-        </div>
-
-        <div class="action">
-          <button onclick="shareVideo()">↗️</button>
-          <div>Share</div>
-        </div>
-
-        <div class="action">
-          <button onclick="saveVideo(this)">⬇️</button>
-          <div>Save</div>
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- REEL 3 -->
-    <section class="reel">
-
-      <video
-        src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4"
-        muted
-        loop
-        playsinline
-        preload="auto">
-      </video>
-
-      <div class="gradient"></div>
-
-      <div class="info">
-        <div class="user">
-          @TrendCreator
-          <button class="follow">Follow</button>
-        </div>
-
-        <div class="caption">
-          😍 நல்ல விஷயங்கள் எப்போதும் Trend ஆகும்!
-        </div>
-
-        <div class="music">
-          🎵 Trend Reels Original
-        </div>
-      </div>
-
-      <div class="actions">
-
-        <div class="action">
-          <button onclick="likeVideo(this)">❤️</button>
-          <div>15K</div>
-        </div>
-
-        <div class="action">
-          <button onclick="commentVideo()">💬</button>
-          <div>321</div>
-        </div>
-
-        <div class="action">
-          <button onclick="shareVideo()">↗️</button>
-          <div>Share</div>
-        </div>
-
-        <div class="action">
-          <button onclick="saveVideo(this)">⬇️</button>
-          <div>Save</div>
-        </div>
-
-      </div>
-    </section>
-
-  </div>
-
-
-  <!-- BOTTOM -->
-  <div class="bottom">
-
-    <div class="nav active">
-      <div class="nav-icon">🏠</div>
-      Home
-    </div>
-
-    <div class="nav">
-      <div class="nav-icon">🔥</div>
-      Trending
-    </div>
-
-    <div class="create" onclick="createVideo()">
-      +
-    </div>
-
-    <div class="nav">
-      <div class="nav-icon">💬</div>
-      Inbox
-    </div>
-
-    <div class="nav">
-      <div class="nav-icon">👤</div>
-      Profile
-    </div>
-
-  </div>
-
-</div>
-
-
-<script>
-
-/* LIKE */
-function likeVideo(button){
-
-  button.classList.toggle("liked");
-
-  if(button.classList.contains("liked")){
-    button.innerHTML="💗";
-  }else{
-    button.innerHTML="❤️";
+class TrendReelsApp extends StatelessWidget {
+  const TrendReelsApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark(),
+      home: const ReelsScreen(),
+    );
   }
 }
 
+class ReelsScreen extends StatefulWidget {
+  const ReelsScreen({super.key});
 
-/* COMMENT */
-function commentVideo(){
-
-  alert("Comments feature விரைவில் வரும் ❤️");
-
+  @override
+  State<ReelsScreen> createState() => _ReelsScreenState();
 }
 
+class _ReelsScreenState extends State<ReelsScreen> {
+  int _currentIndex = 0;
 
-/* SHARE */
-async function shareVideo(){
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
+          // 1. பின்னணி படம் (Background Reel Image)
+          Positioned.fill(
+            child: Image.asset(
+              'assets/reel_bg.png', // உங்கள் படத்தின் பெயருக்கு ஏற்ப மாற்றவும்
+              fit: BoxFit.cover,
+            ),
+          ),
 
-  if(navigator.share){
+          // 2. மேலடுக்கு கறை படிந்த நிழல் (Gradient overlay for readability)
+          Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withOpacity(0.4),
+                    Colors.transparent,
+                    Colors.black.withOpacity(0.8),
+                  ],
+                ),
+              ),
+            ),
+          ),
 
-    try{
+          // 3. மேல் பகுதி தலைப்பு மற்றும் பிரிவுகள் (Header & Categories)
+          SafeArea(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: const [
+                          Text(
+                            'Trend ',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'Reels',
+                            style: TextStyle(
+                              color: Colors.pinkAccent,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Icon(Icons.search, color: Colors.white, size: 28),
+                    ],
+                  ),
+                ),
+                // வகைப் பட்டைகள் (Category Chips)
+                SizedBox(
+                  height: 40,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    children: [
+                      _buildCategoryChip('For You', isSelected: true),
+                      _buildCategoryChip('🔥 Trending'),
+                      _buildCategoryChip('❤️ Love'),
+                      _buildCategoryChip('😂 Comedy'),
+                      _buildCategoryChip('💪 Motivation'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
 
-      await navigator.share({
-        title:"Trend Reels",
-        text:"இந்த Reel-ஐ பாருங்கள் ❤️",
-        url:window.location.href
-      });
+          // 4. வலது பக்க பட்டன்கள் (Like, Comment, Share, Save)
+          Positioned(
+            right: 12,
+            bottom: 90,
+            child: Column(
+              children: [
+                // Profile with Plus
+                Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    const CircleAvatar(
+                      radius: 22,
+                      backgroundImage: NetworkImage('https://via.placeholder.com/150'),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      child: Container(
+                        padding: const EdgeInsets.all(2),
+                        decoration: const BoxDecoration(
+                          color: Colors.pinkAccent,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.add, size: 14, color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                // Like Button
+                const Icon(Icons.favorite, color: Colors.red, size: 36),
+                const SizedBox(height: 4),
+                const Text('12.5K', style: TextStyle(color: Colors.white, fontSize: 12)),
+                const SizedBox(height: 20),
+                // Comment Button
+                const Icon(Icons.chat_bubble_rounded, color: Colors.white, size: 32),
+                const SizedBox(height: 4),
+                const Text('256', style: TextStyle(color: Colors.white, fontSize: 12)),
+                const SizedBox(height: 20),
+                // Share Button
+                const Icon(Icons.share, color: Colors.white, size: 32),
+                const SizedBox(height: 4),
+                const Text('Share', style: TextStyle(color: Colors.white, fontSize: 12)),
+                const SizedBox(height: 20),
+                // Save Button
+                const Icon(Icons.download_rounded, color: Colors.white, size: 32),
+                const SizedBox(height: 4),
+                const Text('Save', style: TextStyle(color: Colors.white, fontSize: 12)),
+                const SizedBox(height: 20),
+                // Rotating Audio Disk
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[900],
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.grey, width: 2),
+                  ),
+                  child: const Icon(Icons.music_note, color: Colors.white, size: 18),
+                ),
+              ],
+            ),
+          ),
 
-    }catch(e){}
+          // 5. கீழ் பகுதி விபரங்கள் (Creator Info & Caption)
+          Positioned(
+            left: 16,
+            right: 80,
+            bottom: 20,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Text(
+                      '@TrendCreator',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.pinkAccent,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Text(
+                        'Follow',
+                        style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  '❤️ வாழ்க்கை அழகானது... ஒவ்வொரு நாளையும் சிரிப்போம்!',
+                  style: TextStyle(color: Colors.white, fontSize: 14),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: const [
+                    Icon(Icons.music_note, color: Colors.white, size: 14),
+                    SizedBox(width: 6),
+                    Text(
+                      'Original Audio - Trend Reels',
+                      style: TextStyle(color: Colors.white, fontSize: 12),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
 
-  }else{
-
-    alert("Share option இந்த browser-ல் இல்லை.");
-
+      // 6. கீழ்ப்பகுதி வழிசெலுத்தல் பட்டி (Bottom Navigation Bar)
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.black,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.pinkAccent,
+        unselectedItemColor: Colors.grey,
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.local_fire_department), label: 'Trending'),
+          BottomNavigationBarItem(
+            icon: SizedBox(
+              width: 40,
+              height: 30,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [Colors.pink, Colors.orange]),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                child: Icon(Icons.add, color: Colors.white),
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.chat_bubble_outline), label: 'Inbox'),
+          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profile'),
+        ],
+      ),
+    );
   }
 
-}
-
-
-/* SAVE */
-function saveVideo(button){
-
-  button.innerHTML="✅";
-
-  button.parentElement.querySelector("div").innerText="Saved";
-
-}
-
-
-/* CREATE */
-function createVideo(){
-
-  alert("Create Reel feature விரைவில் வரும் 🎬");
-
-}
-
-
-/* AUTO PLAY VISIBLE VIDEO */
-
-const videos=document.querySelectorAll(".reel video");
-
-const observer=new IntersectionObserver(
-
-  (entries)=>{
-
-    entries.forEach(entry=>{
-
-      const video=entry.target;
-
-      if(entry.isIntersecting){
-
-        video.play().catch(()=>{});
-
-      }else{
-
-        video.pause();
-
-      }
-
-    });
-
-  },
-
-  {
-    threshold:0.7
+  // வகைப் பட்டைகளை உருவாக்கும் முறை (Helper for Category Chips)
+  Widget _buildCategoryChip(String label, {bool isSelected = false}) {
+    return Container(
+      margin: const EdgeInsets.only(right: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: isSelected ? Colors.pinkAccent : Colors.grey[850],
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Center(
+        child: Text(
+          label,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            fontSize: 13,
+          ),
+        ),
+      ),
+    );
   }
-
-);
-
-
-/* OBSERVE ALL VIDEOS */
-
-videos.forEach(video=>{
-
-  observer.observe(video);
-
-});
-
-
-/* FIRST VIDEO */
-
-window.addEventListener("load",()=>{
-
-  if(videos[0]){
-
-    videos[0].play().catch(()=>{});
-
-  }
-
-});
-
-</script>
-
-</body>
-        </html>
+}

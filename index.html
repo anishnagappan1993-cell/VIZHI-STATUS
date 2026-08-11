@@ -1,215 +1,222 @@
 <!DOCTYPE html>
-<html lang="ta">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#101426">
-<title>VIZHI STATUS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIZHI-STATUS</title>
+    <!-- FontAwesome Icons for YouTube-like icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #0f0f0f;
+            color: #ffffff;
+        }
+        /* Top Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #212121;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+        }
+        .logo {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff0000;
+            letter-spacing: 1px;
+        }
+        .header-icons i {
+            font-size: 20px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+        
+        /* Main Container */
+        .container {
+            margin-top: 60px;
+            margin-bottom: 60px;
+            padding: 10px;
+        }
 
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+        /* Video Item Style (YouTube List Style) */
+        .video-card {
+            display: flex;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+        .thumbnail-box {
+            position: relative;
+            width: 160px;
+            height: 90px;
+            background-color: #333;
+            flex-shrink: 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .thumbnail-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .duration {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: rgba(0, 0, 0, 0.8);
+            font-size: 11px;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        .video-info {
+            padding-left: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
+        .video-title {
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .video-details {
+            font-size: 12px;
+            color: #aaa;
+        }
 
-body{
-  font-family:Arial,"Noto Sans Tamil",sans-serif;
-  background:
-    radial-gradient(circle at 10% 10%,#4f46e544,transparent 35%),
-    radial-gradient(circle at 90% 20%,#06b6d444,transparent 35%),
-    #090d18;
-  color:#fff;
-  min-height:100vh;
-  padding-bottom:40px;
-}
+        /* Bottom Navigation Bar */
+        nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #212121;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 55px;
+            border-top: 1px solid #333;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #aaa;
+            font-size: 10px;
+            text-decoration: none;
+        }
+        .nav-item i {
+            font-size: 18px;
+            margin-bottom: 3px;
+        }
+        .nav-item.active {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
 
-.app{
-  max-width:700px;
-  margin:auto;
-}
+    <!-- Header -->
+    <header>
+        <div class="logo"><i class="fa-solid fa-play-circle" style="color: #ff0000;"></i> VIZHI-STATUS</div>
+        <div class="header-icons">
+            <i class="fa-solid fa-search"></i>
+            <i class="fa-solid fa-ellipsis-v"></i>
+        </div>
+    </header>
 
-header{
-  text-align:center;
-  padding:28px 16px 18px;
-}
+    <!-- Status Video List -->
+    <div class="container" id="videoList">
+        <!-- Dynamic content will load here -->
+    </div>
 
-.logo{
-  font-size:52px;
-}
+    <!-- Bottom Navigation -->
+    <nav>
+        <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i>Home</a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-bolt"></i>Shorts</a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-circle-plus" style="font-size: 24px; color: #ff0000;"></i></a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-clone"></i>Collections</a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-user"></i>You</a>
+    </nav>
 
-h1{
-  font-size:30px;
-  margin-top:4px;
-}
+    <script>
+        // Sample Status Videos Data (நீங்க உங்கள் விருப்பப்படி மாற்றிக்கொள்ளலாம்)
+        const statusVideos = [
+            {
+                title: "Idhu Ni Irukam Nenjamadi Song | Tamil WhatsApp Status",
+                channel: "VIZHI EDITS",
+                views: "18K views",
+                time: "7 days ago",
+                duration: "0:31",
+                thumbnail: "https://picsum.photos/160/90?random=1"
+            },
+            {
+                title: "Manasu Thinam Unna Nenachu Song Status",
+                channel: "VIZHI EDITS",
+                views: "29K views",
+                time: "5 days ago",
+                duration: "0:39",
+                thumbnail: "https://picsum.photos/160/90?random=2"
+            },
+            {
+                title: "Ullathukkulle Song || Romantic WhatsApp Status",
+                channel: "VIZHI EDITS",
+                views: "13K views",
+                time: "3 days ago",
+                duration: "0:44",
+                thumbnail: "https://picsum.photos/160/90?random=3"
+            },
+            {
+                title: "Indru Vantha Nesamo Line || Cute Love Status",
+                channel: "VIZHI EDITS",
+                views: "17K views",
+                time: "2 days ago",
+                duration: "0:30",
+                thumbnail: "https://picsum.photos/160/90?random=4"
+            },
+            {
+                title: "Sandhaiku Vantha Kili Song Status",
+                channel: "VIZHI EDITS",
+                views: "13K views",
+                time: "1 day ago",
+                duration: "0:34",
+                thumbnail: "https://picsum.photos/160/90?random=5"
+            }
+        ];
 
-.subtitle{
-  color:#bfc7da;
-  margin-top:7px;
-  font-size:16px;
-}
+        const container = document.getElementById('videoList');
 
-.nav{
-  display:flex;
-  gap:8px;
-  padding:8px 12px;
-  overflow-x:auto;
-}
-
-.nav button{
-  flex:1;
-  min-width:90px;
-  border:0;
-  border-radius:14px;
-  padding:13px 10px;
-  background:#171d31;
-  color:#fff;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.nav button.active{
-  background:linear-gradient(135deg,#8b5cf6,#06b6d4);
-}
-
-.section{
-  display:none;
-  padding:12px;
-}
-
-.section.active{
-  display:block;
-}
-
-.card{
-  background:#12182aee;
-  border:1px solid #2d3854;
-  border-radius:22px;
-  padding:18px;
-  margin-bottom:16px;
-  box-shadow:0 12px 30px #0005;
-}
-
-label{
-  display:block;
-  font-weight:bold;
-  margin-bottom:8px;
-}
-
-textarea,
-select,
-input{
-  width:100%;
-  border:1px solid #39445f;
-  background:#080c16;
-  color:#fff;
-  border-radius:14px;
-  padding:14px;
-  font-size:16px;
-  outline:none;
-}
-
-textarea{
-  min-height:120px;
-  resize:vertical;
-}
-
-.row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:12px;
-}
-
-button.main{
-  width:100%;
-  border:0;
-  border-radius:15px;
-  padding:15px;
-  color:#fff;
-  font-size:17px;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:10px;
-  background:linear-gradient(135deg,#8b5cf6,#06b6d4);
-}
-
-button.green{
-  background:linear-gradient(135deg,#10b981,#22c55e);
-}
-
-button.blue{
-  background:linear-gradient(135deg,#2563eb,#4f46e5);
-}
-
-button.pink{
-  background:linear-gradient(135deg,#ec4899,#f43f5e);
-}
-
-button:active{
-  transform:scale(.98);
-}
-
-.preview{
-  width:100%;
-  aspect-ratio:9/16;
-  border-radius:20px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:30px;
-  position:relative;
-  overflow:hidden;
-  margin-top:15px;
-  box-shadow:0 15px 35px #0007;
-}
-
-.previewText{
-  font-size:28px;
-  font-weight:800;
-  line-height:1.5;
-  text-shadow:0 3px 12px #0009;
-  word-break:break-word;
-}
-
-.watermark{
-  position:absolute;
-  bottom:18px;
-  left:0;
-  right:0;
-  text-align:center;
-  font-size:13px;
-  opacity:.7;
-}
-
-.theme1{
-  background:linear-gradient(135deg,#ff416c,#ff4b2b);
-}
-
-.theme2{
-  background:linear-gradient(135deg,#141e30,#243b55);
-}
-
-.theme3{
-  background:linear-gradient(135deg,#11998e,#38ef7d);
-}
-
-.theme4{
-  background:linear-gradient(135deg,#654ea3,#eaafc8);
-}
-
-.theme5{
-  background:linear-gradient(135deg,#fc466b,#3f5efb);
-}
-
-.theme6{
-  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-}
-
-video,
-audio{
-  width:100%;
-  border-radius:18px;
-  margin-top:10px;
-}
+        // Loop and display videos like YouTube list
+        statusVideos.forEach(video => {
+            const card = document.createElement('div');
+            card.className = 'video-card';
+            card.innerHTML = `
+                <div class="thumbnail-box">
+                    <img src="${video.thumbnail}" alt="Thumbnail">
+                    <div class="duration">${video.duration}</div>
+                </div>
+                <div class="video-info">
+                    <div class="video-title">${video.title}</div>
+                    <div class="video-details">${video.channel} • ${video.views} • ${video.time}</div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    </script>
+</body>
+</html>

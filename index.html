@@ -1,222 +1,506 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIZHI-STATUS</title>
-    <!-- FontAwesome Icons for YouTube-like icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-        body {
-            background-color: #0f0f0f;
-            color: #ffffff;
-        }
-        /* Top Header */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 15px;
-            background-color: #212121;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 100;
-        }
-        .logo {
-            font-size: 18px;
-            font-weight: bold;
-            color: #ff0000;
-            letter-spacing: 1px;
-        }
-        .header-icons i {
-            font-size: 20px;
-            margin-left: 20px;
-            cursor: pointer;
-        }
-        
-        /* Main Container */
-        .container {
-            margin-top: 60px;
-            margin-bottom: 60px;
-            padding: 10px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vetri Reels</title>
 
-        /* Video Item Style (YouTube List Style) */
-        .video-card {
-            display: flex;
-            margin-bottom: 15px;
-            cursor: pointer;
-        }
-        .thumbnail-box {
-            position: relative;
-            width: 160px;
-            height: 90px;
-            background-color: #333;
-            flex-shrink: 0;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        .thumbnail-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .duration {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            background: rgba(0, 0, 0, 0.8);
-            font-size: 11px;
-            padding: 2px 4px;
-            border-radius: 4px;
-        }
-        .video-info {
-            padding-left: 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            flex-grow: 1;
-        }
-        .video-title {
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 1.3;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .video-details {
-            font-size: 12px;
-            color: #aaa;
-        }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-        /* Bottom Navigation Bar */
-        nav {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            background-color: #212121;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 55px;
-            border-top: 1px solid #333;
-        }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #aaa;
-            font-size: 10px;
-            text-decoration: none;
-        }
-        .nav-item i {
-            font-size: 18px;
-            margin-bottom: 3px;
-        }
-        .nav-item.active {
-            color: #fff;
-        }
-    </style>
+html,body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#000;
+  font-family:Arial,sans-serif;
+  color:white;
+}
+
+.app{
+  width:100%;
+  height:100vh;
+  position:relative;
+  background:#000;
+}
+
+.top{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  z-index:10;
+  padding:18px 16px 12px;
+  background:linear-gradient(
+    to bottom,
+    rgba(0,0,0,.8),
+    transparent
+  );
+}
+
+.logo{
+  font-size:25px;
+  font-weight:bold;
+}
+
+.logo span{
+  color:#ff1764;
+}
+
+.categories{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  margin-top:14px;
+  scrollbar-width:none;
+}
+
+.categories::-webkit-scrollbar{
+  display:none;
+}
+
+.cat{
+  flex:none;
+  padding:9px 16px;
+  border-radius:22px;
+  background:rgba(255,255,255,.14);
+  font-size:14px;
+}
+
+.cat.active{
+  background:#ff1764;
+}
+
+.feed{
+  width:100%;
+  height:100%;
+  overflow-y:scroll;
+  scroll-snap-type:y mandatory;
+  scrollbar-width:none;
+}
+
+.feed::-webkit-scrollbar{
+  display:none;
+}
+
+.reel{
+  width:100%;
+  height:100vh;
+  position:relative;
+  scroll-snap-align:start;
+  background:#111;
+}
+
+.reel video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.gradient{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:45%;
+  background:linear-gradient(
+    transparent,
+    rgba(0,0,0,.85)
+  );
+  pointer-events:none;
+}
+
+.info{
+  position:absolute;
+  left:16px;
+  right:90px;
+  bottom:35px;
+  z-index:5;
+}
+
+.user{
+  font-size:17px;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.follow{
+  background:#ff1764;
+  border:0;
+  color:white;
+  padding:7px 15px;
+  border-radius:18px;
+  margin-left:8px;
+}
+
+.caption{
+  font-size:15px;
+  line-height:1.4;
+  margin-bottom:10px;
+}
+
+.music{
+  font-size:13px;
+  opacity:.9;
+}
+
+.actions{
+  position:absolute;
+  right:13px;
+  bottom:95px;
+  z-index:6;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:22px;
+}
+
+.action{
+  text-align:center;
+  font-size:12px;
+}
+
+.action button{
+  width:52px;
+  height:52px;
+  border:0;
+  border-radius:50%;
+  background:rgba(0,0,0,.45);
+  color:white;
+  font-size:25px;
+}
+
+.action button.liked{
+  color:#ff1764;
+}
+
+.bottom{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:65px;
+  z-index:20;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  background:rgba(0,0,0,.88);
+}
+
+.nav{
+  color:#aaa;
+  text-align:center;
+  font-size:11px;
+}
+
+.nav.active{
+  color:#ff1764;
+}
+
+.create{
+  width:52px;
+  height:42px;
+  border-radius:13px;
+  background:#ff1764;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:28px;
+}
+</style>
 </head>
+
 <body>
 
-    <!-- Header -->
-    <header>
-        <div class="logo"><i class="fa-solid fa-play-circle" style="color: #ff0000;"></i> VIZHI-STATUS</div>
-        <div class="header-icons">
-            <i class="fa-solid fa-search"></i>
-            <i class="fa-solid fa-ellipsis-v"></i>
-        </div>
-    </header>
+<div class="app">
 
-    <!-- Status Video List -->
-    <div class="container" id="videoList">
-        <!-- Dynamic content will load here -->
+  <div class="top">
+    <div class="logo">
+      Vetri <span>Reels</span>
     </div>
 
-    <!-- Bottom Navigation -->
-    <nav>
-        <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i>Home</a>
-        <a href="#" class="nav-item"><i class="fa-solid fa-bolt"></i>Shorts</a>
-        <a href="#" class="nav-item"><i class="fa-solid fa-circle-plus" style="font-size: 24px; color: #ff0000;"></i></a>
-        <a href="#" class="nav-item"><i class="fa-solid fa-clone"></i>Collections</a>
-        <a href="#" class="nav-item"><i class="fa-solid fa-user"></i>You</a>
-    </nav>
+    <div class="categories">
+      <div class="cat active">For You</div>
+      <div class="cat">🔥 Trending</div>
+      <div class="cat">❤️ Love</div>
+      <div class="cat">😂 Comedy</div>
+      <div class="cat">💪 Motivation</div>
+    </div>
+  </div>
 
-    <script>
-        // Sample Status Videos Data (நீங்க உங்கள் விருப்பப்படி மாற்றிக்கொள்ளலாம்)
-        const statusVideos = [
-            {
-                title: "Idhu Ni Irukam Nenjamadi Song | Tamil WhatsApp Status",
-                channel: "VIZHI EDITS",
-                views: "18K views",
-                time: "7 days ago",
-                duration: "0:31",
-                thumbnail: "https://picsum.photos/160/90?random=1"
-            },
-            {
-                title: "Manasu Thinam Unna Nenachu Song Status",
-                channel: "VIZHI EDITS",
-                views: "29K views",
-                time: "5 days ago",
-                duration: "0:39",
-                thumbnail: "https://picsum.photos/160/90?random=2"
-            },
-            {
-                title: "Ullathukkulle Song || Romantic WhatsApp Status",
-                channel: "VIZHI EDITS",
-                views: "13K views",
-                time: "3 days ago",
-                duration: "0:44",
-                thumbnail: "https://picsum.photos/160/90?random=3"
-            },
-            {
-                title: "Indru Vantha Nesamo Line || Cute Love Status",
-                channel: "VIZHI EDITS",
-                views: "17K views",
-                time: "2 days ago",
-                duration: "0:30",
-                thumbnail: "https://picsum.photos/160/90?random=4"
-            },
-            {
-                title: "Sandhaiku Vantha Kili Song Status",
-                channel: "VIZHI EDITS",
-                views: "13K views",
-                time: "1 day ago",
-                duration: "0:34",
-                thumbnail: "https://picsum.photos/160/90?random=5"
-            }
-        ];
+  <div class="feed">
 
-        const container = document.getElementById('videoList');
+    <!-- REEL 1 -->
+    <section class="reel">
+      <video
+        src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4"
+        autoplay
+        muted
+        loop
+        playsinline>
+      </video>
 
-        // Loop and display videos like YouTube list
-        statusVideos.forEach(video => {
-            const card = document.createElement('div');
-            card.className = 'video-card';
-            card.innerHTML = `
-                <div class="thumbnail-box">
-                    <img src="${video.thumbnail}" alt="Thumbnail">
-                    <div class="duration">${video.duration}</div>
-                </div>
-                <div class="video-info">
-                    <div class="video-title">${video.title}</div>
-                    <div class="video-details">${video.channel} • ${video.views} • ${video.time}</div>
-                </div>
-            `;
-            container.appendChild(card);
-        });
-    </script>
+      <div class="gradient"></div>
+
+      <div class="info">
+        <div class="user">
+          @VetriCreator
+          <button class="follow">Follow</button>
+        </div>
+
+        <div class="caption">
+          ❤️ வாழ்க்கை அழகானது... ஒவ்வொரு நாளையும் ரசிப்போம்!
+        </div>
+
+        <div class="music">
+          🎵 Vetri Reels Original
+        </div>
+      </div>
+
+      <div class="actions">
+
+        <div class="action">
+          <button onclick="likeVideo(this)">❤️</button>
+          <div>12.5K</div>
+        </div>
+
+        <div class="action">
+          <button onclick="commentVideo()">💬</button>
+          <div>256</div>
+        </div>
+
+        <div class="action">
+          <button onclick="shareVideo()">↗️</button>
+          <div>Share</div>
+        </div>
+
+        <div class="action">
+          <button onclick="saveVideo(this)">⬇️</button>
+          <div>Save</div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- REEL 2 -->
+    <section class="reel">
+      <video
+        src="https://storage.googleapis.com/coverr-main/mp4/Footboys.mp4"
+        muted
+        loop
+        playsinline>
+      </video>
+
+      <div class="gradient"></div>
+
+      <div class="info">
+        <div class="user">
+          @VetriVideos
+          <button class="follow">Follow</button>
+        </div>
+
+        <div class="caption">
+          🔥 உன் கனவை விடாதே... முயற்சி செய்!
+        </div>
+
+        <div class="music">
+          🎵 Motivation
+        </div>
+      </div>
+
+      <div class="actions">
+
+        <div class="action">
+          <button onclick="likeVideo(this)">❤️</button>
+          <div>8.2K</div>
+        </div>
+
+        <div class="action">
+          <button onclick="commentVideo()">💬</button>
+          <div>143</div>
+        </div>
+
+        <div class="action">
+          <button onclick="shareVideo()">↗️</button>
+          <div>Share</div>
+        </div>
+
+        <div class="action">
+          <button onclick="saveVideo(this)">⬇️</button>
+          <div>Save</div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- REEL 3 -->
+    <section class="reel">
+      <video
+        src="https://storage.googleapis.com/coverr-main/mp4/Skateboard.mp4"
+        muted
+        loop
+        playsinline>
+      </video>
+
+      <div class="gradient"></div>
+
+      <div class="info">
+        <div class="user">
+          @TamilReels
+          <button class="follow">Follow</button>
+        </div>
+
+        <div class="caption">
+          😍 தினமும் ஒரு புதிய நினைவு!
+        </div>
+
+        <div class="music">
+          🎵 Trending Audio
+        </div>
+      </div>
+
+      <div class="actions">
+
+        <div class="action">
+          <button onclick="likeVideo(this)">❤️</button>
+          <div>21K</div>
+        </div>
+
+        <div class="action">
+          <button onclick="commentVideo()">💬</button>
+          <div>421</div>
+        </div>
+
+        <div class="action">
+          <button onclick="shareVideo()">↗️</button>
+          <div>Share</div>
+        </div>
+
+        <div class="action">
+          <button onclick="saveVideo(this)">⬇️</button>
+          <div>Save</div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+
+  <div class="bottom">
+
+    <div class="nav active">
+      🏠<br>Home
+    </div>
+
+    <div class="nav">
+      🔥<br>Trending
+    </div>
+
+    <div class="create">
+      ＋
+    </div>
+
+    <div class="nav">
+      💬<br>Inbox
+    </div>
+
+    <div class="nav">
+      👤<br>Profile
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+function likeVideo(button){
+
+  button.classList.toggle("liked");
+
+  if(button.classList.contains("liked")){
+    button.innerHTML="💗";
+  }else{
+    button.innerHTML="❤️";
+  }
+}
+
+
+function commentVideo(){
+
+  alert("Comments feature — அடுத்த version-ல் சேர்ப்போம் ❤️");
+}
+
+
+async function shareVideo(){
+
+  const shareData={
+    title:"Vetri Reels",
+    text:"இந்த Reel-ஐ பாருங்க 🔥",
+    url:window.location.href
+  };
+
+  try{
+
+    if(navigator.share){
+      await navigator.share(shareData);
+    }else{
+      alert("Share option உங்கள் browser-ல் இல்லை.");
+    }
+
+  }catch(e){}
+}
+
+
+function saveVideo(button){
+
+  button.innerHTML="✅";
+  button.parentElement.querySelector("div").innerText="Saved";
+}
+
+
+/* Automatically play the visible reel */
+
+const videos=document.querySelectorAll(".reel video");
+
+const observer=new IntersectionObserver(
+(entries)=>{
+
+  entries.forEach(entry=>{
+
+    const video=entry.target;
+
+    if(entry.isIntersecting){
+
+      video.play().catch(()=>{});
+
+    }else{
+
+      video.pause();
+
+    }
+
+  });
+
+},
+{
+  threshold:0.7
+}
+);
+
+videos.forEach(video=>{
+  observer.observe(video);
+});
+
+</script>
+
 </body>
-</html>
+          </html>

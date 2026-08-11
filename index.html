@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vetri Reels</title>
+<title>Trend Reels</title>
 
 <style>
 *{
@@ -17,40 +17,43 @@ html,body{
   height:100%;
   overflow:hidden;
   background:#000;
+  color:#fff;
   font-family:Arial,sans-serif;
-  color:white;
 }
 
 .app{
   width:100%;
   height:100vh;
-  position:relative;
   background:#000;
+  position:relative;
 }
 
+/* TOP */
 .top{
   position:absolute;
   top:0;
   left:0;
   right:0;
-  z-index:10;
-  padding:18px 16px 12px;
+  z-index:20;
+  padding:18px 18px 10px;
   background:linear-gradient(
     to bottom,
-    rgba(0,0,0,.8),
+    rgba(0,0,0,.9),
+    rgba(0,0,0,.55),
     transparent
   );
 }
 
 .logo{
-  font-size:25px;
-  font-weight:bold;
+  font-size:26px;
+  font-weight:800;
 }
 
 .logo span{
   color:#ff1764;
 }
 
+/* CATEGORIES */
 .categories{
   display:flex;
   gap:8px;
@@ -65,16 +68,18 @@ html,body{
 
 .cat{
   flex:none;
-  padding:9px 16px;
-  border-radius:22px;
-  background:rgba(255,255,255,.14);
+  padding:10px 17px;
+  border-radius:24px;
+  background:rgba(255,255,255,.15);
   font-size:14px;
+  white-space:nowrap;
 }
 
 .cat.active{
   background:#ff1764;
 }
 
+/* FEED */
 .feed{
   width:100%;
   height:100%;
@@ -87,38 +92,44 @@ html,body{
   display:none;
 }
 
+/* REEL */
 .reel{
   width:100%;
   height:100vh;
   position:relative;
   scroll-snap-align:start;
   background:#111;
+  overflow:hidden;
 }
 
 .reel video{
   width:100%;
   height:100%;
   object-fit:cover;
+  display:block;
+  background:#111;
 }
 
+/* DARK GRADIENT */
 .gradient{
   position:absolute;
   left:0;
   right:0;
   bottom:0;
-  height:45%;
+  height:48%;
   background:linear-gradient(
     transparent,
-    rgba(0,0,0,.85)
+    rgba(0,0,0,.88)
   );
   pointer-events:none;
 }
 
+/* INFO */
 .info{
   position:absolute;
   left:16px;
   right:90px;
-  bottom:35px;
+  bottom:76px;
   z-index:5;
 }
 
@@ -131,16 +142,17 @@ html,body{
 .follow{
   background:#ff1764;
   border:0;
-  color:white;
+  color:#fff;
   padding:7px 15px;
   border-radius:18px;
   margin-left:8px;
+  font-size:14px;
 }
 
 .caption{
   font-size:15px;
   line-height:1.4;
-  margin-bottom:10px;
+  margin-bottom:12px;
 }
 
 .music{
@@ -148,15 +160,16 @@ html,body{
   opacity:.9;
 }
 
+/* ACTIONS */
 .actions{
   position:absolute;
   right:13px;
   bottom:95px;
-  z-index:6;
+  z-index:8;
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:22px;
+  gap:20px;
 }
 
 .action{
@@ -169,7 +182,7 @@ html,body{
   height:52px;
   border:0;
   border-radius:50%;
-  background:rgba(0,0,0,.45);
+  background:rgba(0,0,0,.48);
   color:white;
   font-size:25px;
 }
@@ -178,17 +191,23 @@ html,body{
   color:#ff1764;
 }
 
+.action div{
+  margin-top:5px;
+}
+
+/* BOTTOM */
 .bottom{
   position:absolute;
   bottom:0;
   left:0;
   right:0;
   height:65px;
-  z-index:20;
+  z-index:30;
   display:flex;
   justify-content:space-around;
   align-items:center;
-  background:rgba(0,0,0,.88);
+  background:rgba(0,0,0,.94);
+  border-top:1px solid rgba(255,255,255,.08);
 }
 
 .nav{
@@ -201,15 +220,40 @@ html,body{
   color:#ff1764;
 }
 
+.nav-icon{
+  font-size:21px;
+  line-height:23px;
+}
+
 .create{
-  width:52px;
-  height:42px;
-  border-radius:13px;
+  width:54px;
+  height:44px;
+  border-radius:14px;
   background:#ff1764;
   display:flex;
-  justify-content:center;
   align-items:center;
-  font-size:28px;
+  justify-content:center;
+  font-size:30px;
+  color:white;
+}
+
+/* MOBILE FIX */
+@media(max-width:380px){
+  .logo{
+    font-size:23px;
+  }
+
+  .cat{
+    padding:9px 14px;
+  }
+
+  .info{
+    bottom:73px;
+  }
+
+  .actions{
+    bottom:90px;
+  }
 }
 </style>
 </head>
@@ -218,9 +262,10 @@ html,body{
 
 <div class="app">
 
+  <!-- TOP -->
   <div class="top">
     <div class="logo">
-      Vetri <span>Reels</span>
+      Trend <span>Reels</span>
     </div>
 
     <div class="categories">
@@ -232,32 +277,35 @@ html,body{
     </div>
   </div>
 
-  <div class="feed">
+
+  <!-- FEED -->
+  <div class="feed" id="feed">
 
     <!-- REEL 1 -->
     <section class="reel">
+
       <video
-        src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4"
-        autoplay
+        src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
         muted
         loop
-        playsinline>
+        playsinline
+        preload="auto">
       </video>
 
       <div class="gradient"></div>
 
       <div class="info">
         <div class="user">
-          @VetriCreator
+          @TrendCreator
           <button class="follow">Follow</button>
         </div>
 
         <div class="caption">
-          ❤️ வாழ்க்கை அழகானது... ஒவ்வொரு நாளையும் ரசிப்போம்!
+          ❤️ வாழ்க்கை அழகானது... ஒவ்வொரு நாளையும் சிறப்போம்!
         </div>
 
         <div class="music">
-          🎵 Vetri Reels Original
+          🎵 Original Audio - Trend Reels
         </div>
       </div>
 
@@ -289,18 +337,20 @@ html,body{
 
     <!-- REEL 2 -->
     <section class="reel">
+
       <video
-        src="https://storage.googleapis.com/coverr-main/mp4/Footboys.mp4"
+        src="https://www.w3schools.com/html/mov_bbb.mp4"
         muted
         loop
-        playsinline>
+        playsinline
+        preload="auto">
       </video>
 
       <div class="gradient"></div>
 
       <div class="info">
         <div class="user">
-          @VetriVideos
+          @TrendVideos
           <button class="follow">Follow</button>
         </div>
 
@@ -309,7 +359,7 @@ html,body{
         </div>
 
         <div class="music">
-          🎵 Motivation
+          🎵 Motivation - Trend Reels
         </div>
       </div>
 
@@ -341,27 +391,29 @@ html,body{
 
     <!-- REEL 3 -->
     <section class="reel">
+
       <video
-        src="https://storage.googleapis.com/coverr-main/mp4/Skateboard.mp4"
+        src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4"
         muted
         loop
-        playsinline>
+        playsinline
+        preload="auto">
       </video>
 
       <div class="gradient"></div>
 
       <div class="info">
         <div class="user">
-          @TamilReels
+          @TrendCreator
           <button class="follow">Follow</button>
         </div>
 
         <div class="caption">
-          😍 தினமும் ஒரு புதிய நினைவு!
+          😍 நல்ல விஷயங்கள் எப்போதும் Trend ஆகும்!
         </div>
 
         <div class="music">
-          🎵 Trending Audio
+          🎵 Trend Reels Original
         </div>
       </div>
 
@@ -369,12 +421,12 @@ html,body{
 
         <div class="action">
           <button onclick="likeVideo(this)">❤️</button>
-          <div>21K</div>
+          <div>15K</div>
         </div>
 
         <div class="action">
           <button onclick="commentVideo()">💬</button>
-          <div>421</div>
+          <div>321</div>
         </div>
 
         <div class="action">
@@ -393,26 +445,31 @@ html,body{
   </div>
 
 
+  <!-- BOTTOM -->
   <div class="bottom">
 
     <div class="nav active">
-      🏠<br>Home
+      <div class="nav-icon">🏠</div>
+      Home
     </div>
 
     <div class="nav">
-      🔥<br>Trending
+      <div class="nav-icon">🔥</div>
+      Trending
     </div>
 
-    <div class="create">
-      ＋
-    </div>
-
-    <div class="nav">
-      💬<br>Inbox
+    <div class="create" onclick="createVideo()">
+      +
     </div>
 
     <div class="nav">
-      👤<br>Profile
+      <div class="nav-icon">💬</div>
+      Inbox
+    </div>
+
+    <div class="nav">
+      <div class="nav-icon">👤</div>
+      Profile
     </div>
 
   </div>
@@ -422,6 +479,7 @@ html,body{
 
 <script>
 
+/* LIKE */
 function likeVideo(button){
 
   button.classList.toggle("liked");
@@ -434,73 +492,111 @@ function likeVideo(button){
 }
 
 
+/* COMMENT */
 function commentVideo(){
 
-  alert("Comments feature — அடுத்த version-ல் சேர்ப்போம் ❤️");
+  alert("Comments feature விரைவில் வரும் ❤️");
+
 }
 
 
+/* SHARE */
 async function shareVideo(){
 
-  const shareData={
-    title:"Vetri Reels",
-    text:"இந்த Reel-ஐ பாருங்க 🔥",
-    url:window.location.href
-  };
+  if(navigator.share){
 
-  try{
+    try{
 
-    if(navigator.share){
-      await navigator.share(shareData);
-    }else{
-      alert("Share option உங்கள் browser-ல் இல்லை.");
-    }
+      await navigator.share({
+        title:"Trend Reels",
+        text:"இந்த Reel-ஐ பாருங்கள் ❤️",
+        url:window.location.href
+      });
 
-  }catch(e){}
+    }catch(e){}
+
+  }else{
+
+    alert("Share option இந்த browser-ல் இல்லை.");
+
+  }
+
 }
 
 
+/* SAVE */
 function saveVideo(button){
 
   button.innerHTML="✅";
+
   button.parentElement.querySelector("div").innerText="Saved";
+
 }
 
 
-/* Automatically play the visible reel */
+/* CREATE */
+function createVideo(){
+
+  alert("Create Reel feature விரைவில் வரும் 🎬");
+
+}
+
+
+/* AUTO PLAY VISIBLE VIDEO */
 
 const videos=document.querySelectorAll(".reel video");
 
 const observer=new IntersectionObserver(
-(entries)=>{
 
-  entries.forEach(entry=>{
+  (entries)=>{
 
-    const video=entry.target;
+    entries.forEach(entry=>{
 
-    if(entry.isIntersecting){
+      const video=entry.target;
 
-      video.play().catch(()=>{});
+      if(entry.isIntersecting){
 
-    }else{
+        video.play().catch(()=>{});
 
-      video.pause();
+      }else{
 
-    }
+        video.pause();
 
-  });
+      }
 
-},
-{
-  threshold:0.7
-}
+    });
+
+  },
+
+  {
+    threshold:0.7
+  }
+
 );
 
+
+/* OBSERVE ALL VIDEOS */
+
 videos.forEach(video=>{
+
   observer.observe(video);
+
+});
+
+
+/* FIRST VIDEO */
+
+window.addEventListener("load",()=>{
+
+  if(videos[0]){
+
+    videos[0].play().catch(()=>{});
+
+  }
+
 });
 
 </script>
 
 </body>
-          </html>
+        </html>
